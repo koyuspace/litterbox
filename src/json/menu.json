@@ -1,6 +1,6 @@
 [
     {
-        "page": "home",
+        "page": "timeline/home",
         "name": "Home"
     },
     {
@@ -8,15 +8,15 @@
         "name": "Notifications"
     },
     {
-        "page": "local",
+        "page": "timeline/local",
         "name": "Local"
     },
     {
-        "page": "public",
+        "page": "timeline/public",
         "name": "Federated"
     },
     {
-        "page": "favourites",
+        "page": "timeline/favourites",
         "name": "Favourites"
     }
 ]

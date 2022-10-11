@@ -11,7 +11,7 @@ import menu from "../../json/menu.json";
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             {menu.map((item) => (
-                <li class="nav-item"><a href={`/${item.page}`} class="nav-link" id={`nav-${item.page}`}>{item.name}</a></li>
+                <li class="nav-item"><a href={`/${item.page}`} class="nav-link" id={`nav-${item.page.replaceAll("/", "--")}`}>{item.name}</a></li>
             ))}
         </ul>
     </div>

@@ -1,4 +1,9 @@
 import $ from "jquery";
+import { api } from "../api/request";
+
+api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((ad) => {
+    localStorage.setItem("acct", ad.acct);
+});
 
 export function renderTimeline(selector, data) {
     $(selector).html("");
@@ -18,6 +23,10 @@ export function renderTimeline(selector, data) {
                 }
             });
             status += "</p>";
+        }
+        const acct = localStorage.getItem("acct");
+        if (element.account.acct === acct) {
+            status += `<p><a href="/action/delete?id=${element.id}">Delete</a></p><br>`;
         }
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
         let statusurl = element.url;
