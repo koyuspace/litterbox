@@ -1,0 +1,18 @@
+[
+    {
+        "page": "home",
+        "name": "Home"
+    },
+    {
+        "page": "notifications",
+        "name": "Notifications"
+    },
+    {
+        "page": "local",
+        "name": "Local"
+    },
+    {
+        "page": "public",
+        "name": "Federated"
+    }
+]

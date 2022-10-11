@@ -1,0 +1,10 @@
+---
+import Reload from "../../components/ui/reload.astro";
+---
+
+<script>
+    import { loadLocal } from "../../ts/components/local";
+    loadLocal();
+</script>
+<Reload /><br>
+<div id="local">Loading...</div>

@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/landing.astro";
+---
+
+<Layout>
+    <div class="jumbotron">
+        <img src="/cat.png" height="220" class="logo">
+        <h1 class="display-4 lead">Welcome to litterbox!</h1>
+        <p class="lead">This is a simple client for the Fediverse. Click below to log in with your account.</p>
+        <hr class="my-4">
+        <p class="lead">
+            <form action="/login" method="GET" class="input-group">
+                <span class="input-group-text" id="addon-wrapping">https://</span>
+                <input type="text" class="form-control" name="instance" placeholder="yourinstance.tld">
+                <input type="submit" class="btn btn-lg btn-primary" role="button" value="Log in">
+            </form>
+        </p>
+    </div>
+</Layout>

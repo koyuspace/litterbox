@@ -1,0 +1,10 @@
+---
+import Reload from "../../components/ui/reload.astro";
+---
+
+<script>
+    import { loadHome } from "../../ts/components/home";
+    loadHome();
+</script>
+<Reload /><br>
+<div id="home">Loading...</div>

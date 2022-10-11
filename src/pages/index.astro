@@ -1,0 +1,9 @@
+---
+import Layout from "../layouts/redirect.astro";
+---
+<Layout>
+    <script>
+        import { checkLogin } from "../ts/auth/check";
+        checkLogin();
+    </script>
+</Layout>

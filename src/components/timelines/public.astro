@@ -1,0 +1,10 @@
+---
+import Reload from "../../components/ui/reload.astro";
+---
+
+<script>
+    import { loadPublic } from "../../ts/components/public";
+    loadPublic();
+</script>
+<Reload /><br>
+<div id="public">Loading...</div>

@@ -1,0 +1,10 @@
+<textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?"></textarea><br>
+<input type="submit" id="post" value="Post" class="btn btn-primary" style="float: right;"><br><br><br>
+
+<script>
+    import $ from "jquery";
+    import { post } from "../../ts/workers/post";
+    $("#post").click(() => {
+        post("#post-form");
+    });
+</script>

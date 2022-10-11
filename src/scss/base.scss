@@ -1,0 +1,23 @@
+@import "../../node_modules/bootstrap/scss/bootstrap";
+@import "../../node_modules/bootstrap/scss/_variables";
+
+body {
+    color: #fff;
+}
+
+main {
+    padding: 20px;
+}
+
+.logo {
+    padding: 20px;
+}
+
+.btn svg {
+    height: $font-size-base;
+    vertical-align: middle;
+}
+
+.lead {
+    text-align: center;
+}
