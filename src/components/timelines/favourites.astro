@@ -1,0 +1,10 @@
+---
+import Reload from "../../components/ui/reload.astro";
+---
+
+<script>
+    import { loadFavourites } from "../../ts/timelines/favourites";
+    loadFavourites();
+</script>
+<Reload /><br>
+<div id="favourites">Loading...</div>

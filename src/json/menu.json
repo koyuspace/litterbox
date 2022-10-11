@@ -14,5 +14,9 @@
     {
         "page": "public",
         "name": "Federated"
+    },
+    {
+        "page": "favourites",
+        "name": "Favourites"
     }
 ]
