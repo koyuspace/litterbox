@@ -36,7 +36,6 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         if (element.spoiler_text !== "") {
             let content = element.content;
             if (element.emojis.length > 0) {
-                console.log(element.emojis);
                 element.emojis.forEach(pc_emoji => {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
@@ -53,13 +52,12 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         } else {
             let content = element.content;
             if (element.emojis.length > 0) {
-                console.log(element.emojis);
                 element.emojis.forEach(pc_emoji => {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
-            status += `<p id="status-${element.id}" style="margin-top:20px;">${content}</p>`;
+            status += `<p id="status-${element.id}" style="margin-top:35px;">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
             status += "<p id=\"attachments\">";
@@ -99,5 +97,6 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         status += `<p><a href="/thread?id=${element.id}">${statusdate}</p>`
         status += "</div>";
         $(selector).append(status);
+        localStorage.setItem("last-element", element.id);
     });
 }

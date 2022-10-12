@@ -10,5 +10,18 @@ import Layout from "../../layouts/default.astro";
         <Welcome />
         <Statusbox />
         <Home />
+        <br><br><br>
+        <a href="#" id="next" class="btn btn-primary">Next page &rarr;</a>
     </div>
 </Layout>
+
+<script>
+    import $ from "jquery";
+    $("#next").click((e) => {
+        localStorage.setItem("isnextpage", "true");
+        window.setTimeout(() => {
+            location.reload();
+        }, 20)
+        e.preventDefault();
+    });
+</script>
