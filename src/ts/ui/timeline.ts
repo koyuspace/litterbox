@@ -22,16 +22,30 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         let display_name = element.account.display_name;
         status += `<p><b class="display-name" id="dp-${element.account.id}">${display_name}</b></p>`;
         if (element.spoiler_text !== "") {
+            let content = element.content;
+            if (element.emojis.length > 0) {
+                console.log(element.emojis);
+                element.emojis.forEach(pc_emoji => {
+                    content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
+                });
+            }
             status += `
             <p><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
             </a>
             <div class="collapse" id="status-${element.id}">
-                ${element.content}
+                ${content}
             </div></p>
             `
         } else {
-            status += `<p id="status-${element.id}">${element.content}</p>`;
+            let content = element.content;
+            if (element.emojis.length > 0) {
+                console.log(element.emojis);
+                element.emojis.forEach(pc_emoji => {
+                    content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
+                });
+            }
+            status += `<p id="status-${element.id}">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
             status += "<p id=\"attachments\">";
@@ -74,11 +88,6 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
                 $(`#dp-${element.account.id}`).html($(`#dp-${element.account.id}`).html().replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`));
-            });
-        }
-        if (element.emojis.length > 0) {
-            element.emojis.forEach(pc_emoji => {
-                $(`#pc-${element.id}`).html($(`#pc-${element.id}`).html().replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`));
             });
         }
     });
