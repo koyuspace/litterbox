@@ -108,6 +108,24 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
             });
             status += "</p>";
         }
+        if (element.reblog !== null) {
+            if (element.reblog.media_attachments.length > 0) {
+                status += "<p class=\"attachments\">";
+                element.reblog.media_attachments.forEach((attachment) => {
+                    if (!element.sensitive) {
+                        if (attachment.type === "image") {
+                            status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                        }
+                        if (attachment.type === "video") {
+                            status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" controls></video> `;
+                        }
+                    } else {
+                        status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                    }
+                });
+                status += "</p>";
+            }
+        }
         const acct = localStorage.getItem("acct");
         status += "<p class=\"actions\">";
         if (element.account.acct === acct) {
