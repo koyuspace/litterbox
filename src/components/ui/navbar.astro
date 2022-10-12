@@ -1,4 +1,5 @@
 ---
+import Icon from "astro-icon";
 import menu from "../../json/menu.json";
 ---
 
@@ -15,6 +16,12 @@ import menu from "../../json/menu.json";
             ))}
         </ul>
     </div>
+    <form action="/search" method="GET" class="d-flex" role="search">
+      <div class="input-group mb-3">
+        <input class="form-control" name="q" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-success" type="submit"><Icon name="bi:search" /></button>
+      </div>
+    </form>
   </div>
 </nav>
 <script src="../../ts/ui/menu.ts"></script>
