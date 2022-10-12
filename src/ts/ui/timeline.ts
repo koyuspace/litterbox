@@ -1,4 +1,3 @@
-import $ from "jquery";
 import { api } from "../api/request";
 
 api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((ad) => {
@@ -10,9 +9,8 @@ const iconFav = '<svg viewBox="0 0 16 16" astro-icon="bi:star"><path fill="curre
 const iconUnfav = '<svg viewBox="0 0 16 16" astro-icon="bi:star-fill"><path fill="currentColor" d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path></svg>';
 const iconBoost = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:arrow-repeat"><g fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"></path><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"></path></g></svg>';
 
-export function renderTimeline(selector, data, threadmode=false, ispost=false) {
-    console.log(data);
-    $(selector).html("");
+export function renderTimeline(data, threadmode=false, ispost=false) {
+    let statuses = [];
     data.forEach(element => {
         let status = "";
         if (ispost) {
@@ -107,14 +105,6 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                 }
             });
             status += "</p>";
-        } else {
-/*             const acs = document.getElementsByClassName("attachment");
-            Array.prototype.forEach.call(acs, function(ac) {
-                console.log(ac);
-                if (ac.innerHTML == "") {
-                    ac.innerHTML = `<p class="attachments"><img src="${ac.href}" height="300"></p>`;
-                }
-            }); */
         }
         if (element.reblog !== null) {
             if (element.reblog.media_attachments.length > 0) {
@@ -153,9 +143,14 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         }
         status += "</p><br>";
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
-        status += `<p><a href="/thread?id=${element.id}">${statusdate}</p>`
+        status += `<p><a href="/thread?id=${element.id}">${statusdate}</a></p>`
         status += "</div>";
-        $(selector).append(status);
         localStorage.setItem("last-element", element.id);
+        statuses.push(status)
     });
+    let html = "";
+    statuses.forEach((se) => {
+        html += se;
+    });
+    return html;
 }

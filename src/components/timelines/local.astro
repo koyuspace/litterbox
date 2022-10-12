@@ -3,11 +3,12 @@ import Reload from "../../components/ui/reload.astro";
 ---
 
 <script>
+    import $ from "jquery";
     import { loadLocal } from "../../ts/timelines/local";
     import { checkReload } from "../../ts/workers/checkreload";
     localStorage.setItem("currentpage", "local");
     checkReload();
-    loadLocal();
+    $("#local").html(loadLocal());
 </script>
 <Reload /><br>
 <div id="local">Loading...</div>

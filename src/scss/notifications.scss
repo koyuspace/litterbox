@@ -1,0 +1,17 @@
+@import "../../node_modules/bootstrap/scss/_variables";
+
+#notifications ul {
+    list-style: none;
+}
+
+#notifications li {
+    margin-bottom: 40px;
+    background: darken($gray-800, 10%);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+#notifications .icon {
+    height: 16px;
+    vertical-align: middle;
+}

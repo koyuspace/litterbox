@@ -1,14 +1,17 @@
 ---
 import Reload from "../../components/ui/reload.astro";
+import Icon from "astro-icon";
 ---
 
 <script>
     import $ from "jquery";
-    import { loadFavourites } from "../../ts/timelines/favourites";
+    import { loadNotifications } from "../../ts/timelines/notifications";
     import { checkReload } from "../../ts/workers/checkreload";
     localStorage.setItem("currentpage", "favourites");
     checkReload();
-    $("#favourites").html(loadFavourites());
+    $(document).ready(() => {
+        $("#notifications").html(loadNotifications());
+    });
 </script>
 <Reload /><br>
-<div id="favourites">Loading...</div>
+<div id="notifications">Loading...</div>
