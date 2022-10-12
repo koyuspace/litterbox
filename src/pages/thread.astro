@@ -1,0 +1,26 @@
+---
+import Statusbox from "../components/home/statusbox.astro";
+import Welcome from "../components/home/welcome.astro";
+import Layout from "../layouts/default.astro";
+---
+
+<Layout>
+    <div class="center">
+        <a href="#" id="back">&larr; Back</a>
+        <div id="ancestors"></div>
+        <div id="status"></div>
+        <div id="descendants"></div>
+        <script>
+            import $ from "jquery";
+            import { loadThread } from "../ts/ui/thread";
+            import { checkReload }  from "../ts/workers/checkreload";
+            const id = location.href.split("?id=")[1];
+            checkReload();
+            loadThread(id);
+            $("#back").click((e) => {
+                location.href = "/timeline/"+localStorage.getItem("currentpage");
+                e.preventDefault();
+            });
+        </script>
+    </div>
+</Layout>

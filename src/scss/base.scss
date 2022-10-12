@@ -21,3 +21,19 @@ main {
 .lead {
     text-align: center;
 }
+
+.center {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.center > .btn,
+.center > .logo {
+    display: block;
+    margin: 0 auto;
+}
+
+.btn {
+    width: auto !important;
+}

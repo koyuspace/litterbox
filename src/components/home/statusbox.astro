@@ -1,10 +1,26 @@
+---
+import Icon from "astro-icon";
+---
+
+<input type="text" class="form-control" id="spoiler" placeholder="Content warning"><br>
 <textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?"></textarea><br>
-<input type="submit" id="post" value="Post" class="btn btn-primary" style="float: right;"><br><br><br>
+<div class="input-group" style="float: right; width:40%;">
+    <select class="form-select" id="visibility">
+        <option value="public" id="public">Public</option>
+        <option value="unlisted" id="unlisted">Unlisted</option>
+        <option value="private" id="private">Private</option>
+        <option value="direct" id="direct">Direct</option>
+    </select>
+    <input type="submit" id="post" value="Post" class="btn btn-primary">
+</div>
+
+<br><br><br>
 
 <script>
     import $ from "jquery";
-    import { post } from "../../ts/workers/post";
+    import { post, loadPostForm } from "../../ts/workers/post";
+    loadPostForm();
     $("#post").click(() => {
-        post("#post-form");
+        post("#post-form", "#visiblity", "#spoiler");
     });
 </script>

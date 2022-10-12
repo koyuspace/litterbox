@@ -4,6 +4,9 @@ import Reload from "../../components/ui/reload.astro";
 
 <script>
     import { loadLocal } from "../../ts/timelines/local";
+    import { checkReload } from "../../ts/workers/checkreload";
+    localStorage.setItem("currentpage", "local");
+    checkReload();
     loadLocal();
 </script>
 <Reload /><br>

@@ -4,6 +4,9 @@ import Reload from "../../components/ui/reload.astro";
 
 <script>
     import { loadFavourites } from "../../ts/timelines/favourites";
+    import { checkReload } from "../../ts/workers/checkreload";
+    localStorage.setItem("currentpage", "favourites");
+    checkReload();
     loadFavourites();
 </script>
 <Reload /><br>

@@ -1,4 +1,25 @@
+@import "../../node_modules/bootstrap/scss/_variables";
+
 .status {
     margin: 10px;
     padding: 10px;
+}
+
+.attachment {
+    vertical-align: middle;
+    padding: 10px;
+}
+
+#attachments {
+    background: lighten($gray-900, 5%);
+    text-align: center;
+    border-radius: 4px;
+}
+
+a .invisible {
+    visibility: visible !important;
+}
+
+.bg-darker {
+    background: darken($gray-900, 5%);
 }
