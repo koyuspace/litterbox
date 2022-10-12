@@ -36,7 +36,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                 });
             }
             status += `
-            <p><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
+            <p style="margin-top:35px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
             </a>
             <div class="collapse" id="status-${element.id}">
@@ -51,7 +51,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
             }
-            status += `<p id="status-${element.id}" style="width:85%;">${content}</p>`;
+            status += `<p id="status-${element.id}" style="margin-top:20px;">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
             status += "<p id=\"attachments\">";
