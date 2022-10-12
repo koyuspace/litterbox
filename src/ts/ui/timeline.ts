@@ -20,6 +20,11 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
             status = "<div class=\"card bg-dark status\">";
         }
         let display_name = element.account.display_name;
+        if (element.account.emojis.length > 0) {
+            element.account.emojis.forEach(dp_emoji => {
+                display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
+            });
+        }
         status += `<p><b class="display-name" id="dp-${element.account.id}">${display_name}</b></p>`;
         if (element.spoiler_text !== "") {
             let content = element.content;
@@ -85,10 +90,5 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         status += `<p><a href="/thread?id=${element.id}">${statusdate}</p>`
         status += "</div>";
         $(selector).append(status);
-        if (element.account.emojis.length > 0) {
-            element.account.emojis.forEach(dp_emoji => {
-                $(`#dp-${element.account.id}`).html($(`#dp-${element.account.id}`).html().replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`));
-            });
-        }
     });
 }

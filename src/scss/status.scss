@@ -23,3 +23,8 @@ a .invisible {
 .bg-darker {
     background: darken($gray-900, 5%);
 }
+
+.emoji {
+    height: 16px;
+    width: auto;
+}
