@@ -62,7 +62,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
             <p style="margin-top:35px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
             </a>
-            <div class="collapse" id="status-${element.id}">
+            <div class="collapse" class="status-content" id="status-${element.id}">
                 ${content}
             </div></p>
             `
@@ -90,7 +90,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                 });
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
-            status += `<p id="status-${element.id}" style="margin-top:35px;">${content}</p>`;
+            status += `<p id="status-${element.id}" style="margin-top:35px;"  class="status-content">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
             status += "<p class=\"attachments\">";
@@ -107,6 +107,14 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                 }
             });
             status += "</p>";
+        } else {
+/*             const acs = document.getElementsByClassName("attachment");
+            Array.prototype.forEach.call(acs, function(ac) {
+                console.log(ac);
+                if (ac.innerHTML == "") {
+                    ac.innerHTML = `<p class="attachments"><img src="${ac.href}" height="300"></p>`;
+                }
+            }); */
         }
         if (element.reblog !== null) {
             if (element.reblog.media_attachments.length > 0) {
@@ -149,12 +157,5 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         status += "</div>";
         $(selector).append(status);
         localStorage.setItem("last-element", element.id);
-        const acs = document.getElementsByClassName("attachment");
-        Array.prototype.forEach.call(acs, function(ac) {
-            console.log(ac);
-            if (ac.innerHTML == "") {
-                ac.innerHTML = `<p class="attachments"><img src="${ac.href}" height="300"></p>`;
-            }
-        });
     });
 }
