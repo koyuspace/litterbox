@@ -19,7 +19,13 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         } else {
             status = "<div class=\"card bg-dark status\">";
         }
-        status += `<div style="text-align: right;margin:10px;"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></div>`;
+        let author_url = "";
+        if (element.account.acct.includes("@")) {
+            author_url = "https://"+element.account.acct.split("@")[1]+"/users/"+element.account.acct.split("@")[0];
+        } else {
+            author_url = "https://"+localStorage.getItem("instance")+"/users/"+element.account.acct;
+        }
+        status += `<div style="text-align: right;margin:10px;"><a href="${author_url}" target="_blank"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></a></div>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
@@ -35,6 +41,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
             }
+            content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
             status += `
             <p style="margin-top:35px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
@@ -51,6 +58,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
             }
+            content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
             status += `<p id="status-${element.id}" style="margin-top:20px;">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
