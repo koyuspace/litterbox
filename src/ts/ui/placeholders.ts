@@ -18,7 +18,8 @@ export function initializePlaceholders() {
 }
 
 $(document).ready(() => {
-    window.setTimeout(() => {
+    $(".userpic").attr("src", userpic);
+    window.setInterval(() => {
         $(".userpic").attr("src", userpic);
-    }, 100);
+    }, 1000);
 });

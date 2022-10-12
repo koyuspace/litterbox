@@ -19,13 +19,14 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
         } else {
             status = "<div class=\"card bg-dark status\">";
         }
+        status += `<div style="text-align: right;margin:10px;"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></div>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
                 display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
             });
         }
-        status += `<p><b class="display-name" id="dp-${element.account.id}">${display_name}</b></p>`;
+        status += `<p style="margin-top:-74px;"><b class="display-name" id="dp-${element.account.id}">${display_name}</b></p>`;
         if (element.spoiler_text !== "") {
             let content = element.content;
             if (element.emojis.length > 0) {
@@ -50,7 +51,7 @@ export function renderTimeline(selector, data, threadmode=false, ispost=false) {
                     content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
                 });
             }
-            status += `<p id="status-${element.id}">${content}</p>`;
+            status += `<p id="status-${element.id}" style="width:85%;">${content}</p>`;
         }
         if (element.media_attachments.length > 0) {
             status += "<p id=\"attachments\">";
