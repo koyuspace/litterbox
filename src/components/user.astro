@@ -1,0 +1,13 @@
+---
+import { Icon } from "astro-icon";
+---
+
+<script>
+    import { loadUser } from "../ts/ui/user";
+    import { checkReload } from "../ts/workers/checkreload";
+    localStorage.setItem("currentpage", "local");
+    checkReload();
+    const id = location.href.split("?id=")[1];
+    loadUser(id);
+</script>
+<div id="user">Loading...</div>

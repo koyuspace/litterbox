@@ -1,0 +1,23 @@
+---
+import User from "../components/user.astro";
+import Layout from "../layouts/default.astro";
+---
+
+<Layout>
+    <div class="center">
+        <User />
+        <br><br><br>
+        <a href="#" id="next" class="btn btn-primary">Next page &rarr;</a>
+    </div>
+</Layout>
+
+<script>
+import $ from "jquery";
+$("#next").click((e) => {
+    localStorage.setItem("isnextpage", "true");
+    window.setTimeout(() => {
+        location.reload();
+    }, 20)
+    e.preventDefault();
+});
+</script>

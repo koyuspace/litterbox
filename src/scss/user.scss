@@ -1,0 +1,37 @@
+@import "../../node_modules/bootstrap/scss/_variables";
+
+#user_card {
+    text-align: center;
+    padding: 10px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+}
+
+#followbutton {
+    color: #fff;
+    float: right;
+}
+
+#followbutton .icon {
+    height: 32px;
+}
+
+#bio {
+    background: $gray-800;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+#acct {
+    margin-top: -20px;
+    font-size: 8pt;
+}
+
+#acct .icon {
+    height: 8pt;
+    vertical-align: middle;
+}

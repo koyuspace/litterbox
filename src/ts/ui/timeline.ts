@@ -18,13 +18,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         } else {
             status = "<div class=\"card bg-dark status\">";
         }
-        let author_url = "";
-        if (element.account.acct.includes("@")) {
-            author_url = "https://"+element.account.acct.split("@")[1]+"/users/"+element.account.acct.split("@")[0];
-        } else {
-            author_url = "https://"+localStorage.getItem("instance")+"/users/"+element.account.acct;
-        }
-        status += `<div style="text-align: right;margin:10px;"><a href="${author_url}" target="_blank"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></a></div>`;
+        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></a></div>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
@@ -41,13 +35,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                let reblog_author_url = "";
-                if (element.reblog.account.acct.includes("@")) {
-                    reblog_author_url = "https://"+element.reblog.account.acct.split("@")[1]+"/users/"+element.reblog.account.acct.split("@")[0];
-                } else {
-                    reblog_author_url = "https://"+localStorage.getItem("instance")+"/users/"+element.reblog.account.acct;
-                }
-                content = `<p><b>${iconBoost} <a href="${reblog_author_url}" target="_blank"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+                status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
             }
             content += element.content;
             if (element.emojis.length > 0) {
@@ -73,13 +61,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                let reblog_author_url = "";
-                if (element.reblog.account.acct.includes("@")) {
-                    reblog_author_url = "https://"+element.reblog.account.acct.split("@")[1]+"/users/"+element.reblog.account.acct.split("@")[0];
-                } else {
-                    reblog_author_url = "https://"+localStorage.getItem("instance")+"/users/"+element.reblog.account.acct;
-                }
-                content = `<p><b>${iconBoost} <a href="${reblog_author_url}" target="_blank"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+                status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
             }
             content += element.content;
             if (element.emojis.length > 0) {
@@ -130,15 +112,28 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
             status += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
         }
         if (threadmode) {
-            if (!element.favourited) {
-                status += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav}</a> `;
+            if (!element.reblog) {
+                if (!element.favourited) {
+                    status += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav}</a> `;
+                } else {
+                    status += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav}</a> `;
+                }
+                if (!element.reblogged) {
+                    status += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost}</a> `;
+                } else {
+                    status += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost}</a> `;
+                }
             } else {
-                status += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav}</a> `;
-            }
-            if (!element.reblogged) {
-                status += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost}</a> `;
-            } else {
-                status += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost}</a> `;
+                if (!element.reblog.favourited) {
+                    status += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
+                } else {
+                    status += `<a href="/action/unfav?id=${element.reblog.id}" class="btn btn-warning">${iconUnfav}</a> `;
+                }
+                if (!element.reblog.reblogged) {
+                    status += `<a href="/action/boost?id=${element.reblog.id}" class="btn btn-secondary">${iconBoost}</a> `;
+                } else {
+                    status += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
+                }
             }
         }
         status += "</p><br>";

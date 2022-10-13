@@ -1,1 +1,9 @@
-<h1>WIP</h1>
+<script>
+    import { loadSearch } from "../ts/ui/search";
+    import { checkReload } from "../ts/workers/checkreload";
+    localStorage.setItem("currentpage", "local");
+    checkReload();
+    const query = location.href.split("?q=")[1];
+    loadSearch(query);
+</script>
+<div id="search">Loading...</div>

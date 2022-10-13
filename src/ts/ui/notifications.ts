@@ -7,7 +7,6 @@ const iconBoost = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:arrow-re
 const iconFollow = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:person-plus"><g fill="currentColor"><path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"></path><path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"></path></g></svg>';
 
 export function renderNotifications(data) {
-    console.log(data);
     let notifications = "<ul>";
     data.forEach(element => {
         let display_name = element.account.display_name;
@@ -16,15 +15,9 @@ export function renderNotifications(data) {
                 display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
             });
         }
-        let author_url = "";
-        if (element.account.acct.includes("@")) {
-            author_url = "https://"+element.account.acct.split("@")[1]+"/users/"+element.account.acct.split("@")[0];
-        } else {
-            author_url = "https://"+localStorage.getItem("instance")+"/users/"+element.account.acct;
-        }
         switch (element.type) {
             case "follow":
-                notifications += `<li><b><a href="${author_url}" target="_blank"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.display_name}'s Avatar"></a> ${display_name} followed you</b></li>`;
+                notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.display_name}'s Avatar"></a> ${display_name} followed you</li>`;
                 break;
             case "favourite":
                 notifications += `<li>${iconFav} ${display_name} favourited your post:<br>${renderTimeline([element.status], true, false)}</li>`;
