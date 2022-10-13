@@ -41,10 +41,12 @@ main {
     height: 16px;
 }
 
-@media(min-width:800px) {
-    .center {
-        width: 50%;
-    }
+#logo {
+    width: 1.25rem;
+    height: 1.25rem;
+    vertical-align: middle;
+    margin-top: -3px;
+    margin-right: 8px;
 }
 
 footer a svg {
