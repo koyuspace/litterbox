@@ -19,10 +19,10 @@ export function renderNotifications(data) {
                 notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} followed you</li>`;
                 break;
             case "favourite":
-                notifications += `<li>${iconFav} ${display_name} favourited your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                notifications += `<li>${iconFav} <a href="/user?id=${element.account.id}">${display_name}</a> favourited your post:<br>${renderTimeline([element.status], true, false)}</li>`;
                 break;
             case "reblog":
-                notifications += `<li>${iconBoost} ${display_name} boosted your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                notifications += `<li>${iconBoost} <a href="/user?id=${element.account.id}">${display_name}</a> boosted your post:<br>${renderTimeline([element.status], true, false)}</li>`;
                 break;
             case "mention":
                 notifications += `<li>@ ${display_name} mentioned you:<br>${renderTimeline([element.status], true, false)}</li>`;
