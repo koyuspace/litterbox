@@ -1,0 +1,15 @@
+---
+import Reload from "../components/ui/reload.astro";
+---
+
+<script>
+    import $ from "jquery";
+    import { renderFollowRequests } from "../ts/ui/follow_requests"
+    import { checkReload } from "../ts/workers/checkreload";
+    checkReload();
+    $(document).ready(() => {
+        renderFollowRequests();
+    });
+</script>
+<Reload /><br>
+<div id="follow_requests">Loading...</div>

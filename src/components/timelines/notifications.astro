@@ -1,13 +1,12 @@
 ---
 import Reload from "../../components/ui/reload.astro";
-import Icon from "astro-icon";
 ---
 
 <script>
     import $ from "jquery";
     import { loadNotifications } from "../../ts/timelines/notifications";
     import { checkReload } from "../../ts/workers/checkreload";
-    localStorage.setItem("currentpage", "favourites");
+    localStorage.setItem("currentpage", "notifications");
     checkReload();
     $(document).ready(() => {
         $("#notifications").html(loadNotifications());

@@ -25,7 +25,6 @@ export function loadUser(id) {
             api(localStorage.getItem("instance"), ureq, true, "GET", {}, localStorage.getItem("token")).then((data) => {
                 cd[2] = data;
             }).then(() => {
-                console.log(cd);
                 let display_name = cd[0].display_name;
                 if (cd[0].emojis.length > 0) {
                     cd[0].emojis.forEach(dp_emoji => {

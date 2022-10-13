@@ -1,0 +1,19 @@
+---
+import Layout from "../../../layouts/redirect.astro";
+---
+
+<Layout>
+    <script>
+        import { api } from "../../../ts/api/request";
+        const id = location.href.split("?id=")[1];
+        api(localStorage.getItem("instance"), `/api/v1/follow_requests/${id}/authorize`, true, "POST", {}, localStorage.getItem("token")).then(() => {
+            api(localStorage.getItem("instance"), `/api/v1/accounts/${id}/follow`, true, "POST", {}, localStorage.getItem("token")).then(() => {
+                if (document.referrer.includes("?")) {
+                    location.href = document.referrer+"&reload=true";
+                } else {
+                    location.href = document.referrer+"?reload=true";
+                }
+            });
+        });
+    </script>
+</Layout>

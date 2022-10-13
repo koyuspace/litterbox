@@ -14,6 +14,7 @@ import menu from "../../json/menu.json";
             {menu.map((item) => (
                 <li class="nav-item"><a href={`/${item.page}`} class="nav-link" id={`nav-${item.page.replaceAll("/", "--")}`}>{item.name}</a></li>
             ))}
+            <li class="nav-item"><a href="/follow_requests" class="nav-link" id="nav-follow_requests">Follow requests</a></li>
         </ul>
     </div>
     <form action="/search" method="GET" class="d-flex" role="search">
