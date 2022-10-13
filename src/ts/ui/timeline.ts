@@ -141,7 +141,11 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         }
         status += "</p><br>";
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
-        status += `<p><a href="/thread?id=${element.id}">${statusdate}</a></p>`
+        if (element.reblog === null) {
+            status += `<p><a href="/thread?id=${element.id}">${statusdate}</a></p>`;
+        } else {
+            status += `<p><a href="/thread?id=${element.reblog.id}">${statusdate}</a></p>`;
+        }
         status += "</div>";
         localStorage.setItem("last-element", element.id);
         statuses.push(status)
