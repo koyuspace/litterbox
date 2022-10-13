@@ -1,5 +1,6 @@
 ---
 import Reload from "../../components/ui/reload.astro";
+import Icon from "astro-icon";
 ---
 
 <script>
@@ -12,5 +13,5 @@ import Reload from "../../components/ui/reload.astro";
         $("#notifications").html(loadNotifications());
     });
 </script>
-<Reload /><br>
+<Reload /> <button onclick="location.href='/action/deletenotifications'" class="btn btn-danger" style="float:right;margin-right:8px;"><Icon name="bi:trash" /></button><br><br><br>
 <div id="notifications">Loading...</div>
