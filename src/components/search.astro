@@ -1,9 +1,10 @@
 <script>
     import { loadSearch } from "../ts/ui/search";
     import { checkReload } from "../ts/workers/checkreload";
-    localStorage.setItem("currentpage", "local");
+    localStorage.setItem("currentpage", "search");
     checkReload();
     const query = location.href.split("?q=")[1];
+    localStorage.setItem("lastsearch", "query");
     loadSearch(query);
 </script>
 <div id="search">Loading...</div>

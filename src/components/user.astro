@@ -5,9 +5,10 @@ import { Icon } from "astro-icon";
 <script>
     import { loadUser } from "../ts/ui/user";
     import { checkReload } from "../ts/workers/checkreload";
-    localStorage.setItem("currentpage", "local");
+    localStorage.setItem("currentpage", "user");
     checkReload();
     const id = location.href.split("?id=")[1];
+    localStorage.setItem("lastuser", id);
     loadUser(id);
 </script>
 <div id="user">Loading...</div>
