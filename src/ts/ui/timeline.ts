@@ -10,6 +10,10 @@ const iconUnfav = '<svg viewBox="0 0 16 16" astro-icon="bi:star-fill"><path fill
 const iconBoost = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:arrow-repeat"><g fill="currentColor"><path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"></path><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"></path></g></svg>';
 const iconReply = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:arrow-90deg-left"><path fill="currentColor" fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4z"></path></svg>';
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 export function renderTimeline(data, threadmode=false, ispost=false) {
     let statuses = [];
     data.forEach(element => {
@@ -142,9 +146,9 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         status += "</p><br>";
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
         if (element.reblog === null) {
-            status += `<p><a href="/thread?id=${element.id}">${statusdate}</a></p>`;
+            status += `<p><a href="/thread?id=${element.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)}</p>`;
         } else {
-            status += `<p><a href="/thread?id=${element.reblog.id}">${statusdate}</a></p>`;
+            status += `<p><a href="/thread?id=${element.reblog.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)}</p>`;
         }
         status += "</div>";
         localStorage.setItem("last-element", element.id);
