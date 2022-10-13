@@ -40,7 +40,8 @@ export function post() {
         "poll": [],
         "visibility": $("#visibility").val(),
         "spoiler_text": $("#spoiler").val(),
-        "in_reply_to_id": id
+        "in_reply_to_id": id,
+        "sensitive": $("#spoiler").val() !== ""
     }, localStorage.getItem("token")).then(() => {
         $("#post-form").val("");
         window.setTimeout(() => {

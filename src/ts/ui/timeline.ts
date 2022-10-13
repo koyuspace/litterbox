@@ -43,10 +43,18 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                 status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
             }
             content += element.content;
-            if (element.emojis.length > 0) {
-                element.emojis.forEach(pc_emoji => {
-                    content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
-                });
+            if (element.reblog === null) {
+                if (element.emojis.length > 0) {
+                    element.emojis.forEach(pc_emoji => {
+                        content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
+                    });
+                }
+            } else {
+                if (element.reblog.emojis.length > 0) {
+                    element.reblog.emojis.forEach(rpc_emoji => {
+                        content = content.replaceAll(`:${rpc_emoji.shortcode}:`, `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`);
+                    });
+                }
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
             status += `
@@ -69,10 +77,18 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                 status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
             }
             content += element.content;
-            if (element.emojis.length > 0) {
-                element.emojis.forEach(pc_emoji => {
-                    content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
-                });
+            if (element.reblog === null) {
+                if (element.emojis.length > 0) {
+                    element.emojis.forEach(pc_emoji => {
+                        content = content.replaceAll(`:${pc_emoji.shortcode}:`, `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`);
+                    });
+                }
+            } else {
+                if (element.reblog.emojis.length > 0) {
+                    element.reblog.emojis.forEach(rpc_emoji => {
+                        content = content.replaceAll(`:${rpc_emoji.shortcode}:`, `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`);
+                    });
+                }
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
             status += `<p id="status-${element.id}" style="margin-top:35px;"  class="status-content">${content}</p>`;
