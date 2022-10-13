@@ -75,7 +75,13 @@ export function loadUser(id) {
                     html += "</p>";
                 }
                 html += `<div id="acct">@${cd[0].acct} ${lock}</div>`;
-                html += `<div id="bio">${cd[0].note}</div>`;
+                let bio = cd[0].note;
+                if (cd[0].emojis.length > 0) {
+                    cd[0].emojis.forEach(bio_emoji => {
+                        bio = bio.replaceAll(`:${bio_emoji.shortcode}:`, `<img src="${bio_emoji.url}" alt="Emoji ${bio_emoji.shortcode}" class="emoji">`);
+                    });
+                }
+                html += `<div id="bio">${bio}</div>`;
                 let inaccurate = "";
                 if (cd[0].acct.includes("@")) {
                     
