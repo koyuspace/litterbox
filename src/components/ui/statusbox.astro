@@ -1,7 +1,3 @@
----
-import Icon from "astro-icon";
----
-
 <input type="text" class="form-control" id="spoiler" placeholder="Content warning"><br>
 <textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?"></textarea><br>
 <div class="input-group" style="float: right; width:40%;">
@@ -16,11 +12,4 @@ import Icon from "astro-icon";
 
 <br><br><br>
 
-<script>
-    import $ from "jquery";
-    import { post, loadPostForm } from "../../ts/workers/post";
-    loadPostForm();
-    $("#post").click(() => {
-        post("#post-form", "#visiblity", "#spoiler");
-    });
-</script>
+<script src="../../ts/ui/statusbox.ts"></script>
