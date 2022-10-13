@@ -3,17 +3,21 @@ import { api } from "../api/request";
 import{ renderTimeline } from "../ui/timeline";
 
 export function loadPostForm() {
-    api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
-        $(`#${data.source.privacy}`).attr("selected", "");
-    });
     const id = location.href.split("?id=")[1];
+    if (id === undefined) {
+        api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+            $(`#${data.source.privacy}`).attr("selected", "");
+        });
+    }
     if (id !== undefined) {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             if (data.reblog) {
+                $(`#${data.reblog.visibility}`).attr("selected", "");
                 if (data.reblog.account.id !== localStorage.getItem("userid")) {
                     $("#post-form").val(`@${data.reblog.account.acct} `);
                 }
             } else {
+                $(`#${data.visibility}`).attr("selected", "");
                 if (data.account.id !== localStorage.getItem("userid")) {
                     $("#post-form").val(`@${data.account.acct} `);
                 }
