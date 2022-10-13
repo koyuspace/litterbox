@@ -4,7 +4,7 @@ import { renderTimeline } from "./timeline";
 
 export function loadSearch(query) {
     $("#query").val(decodeURIComponent(query));
-    api(localStorage.getItem("instance"), `/api/v1/search?q=${query}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
+    api(localStorage.getItem("instance"), `/api/v2/search?q=${query}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
         let html = "";
         html += "<br><h1>Accounts</h1>";
         if (data.accounts.length === 0) {

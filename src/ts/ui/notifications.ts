@@ -14,6 +14,7 @@ export function renderNotifications(data) {
                 display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
             });
         }
+        console.log(element);
         switch (element.type) {
             case "follow":
                 notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} followed you</li>`;
@@ -26,6 +27,9 @@ export function renderNotifications(data) {
                 break;
             case "mention":
                 notifications += `<li>@ ${display_name} mentioned you:<br>${renderTimeline([element.status], true, false)}</li>`;
+                break;
+            case "poll":
+                notifications += `<li>${display_name.split(" ")[0]}'s poll finished:<br>${renderTimeline([element.status], true, false)}</li>`;
                 break;
             case "follow_request":
                 notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} wants to follow you</li>`;
