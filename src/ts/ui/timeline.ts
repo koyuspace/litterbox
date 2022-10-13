@@ -19,7 +19,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         } else {
             status = "<div class=\"card bg-dark status\">";
         }
-        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></a></div>`;
+        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a></div>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
