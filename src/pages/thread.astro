@@ -11,28 +11,13 @@ import Layout from "../layouts/default.astro";
         <script>
             import $ from "jquery";
             import { loadThread } from "../ts/ui/thread";
+            import { goBack } from "../ts/workers/back";
             import { checkReload }  from "../ts/workers/checkreload";
             const id = location.href.split("?id=")[1];
             checkReload();
             loadThread(id);
             $("#back").click((e) => {
-                switch (localStorage.getItem("currentpage")) {
-                    case "user":
-                        location.href = "/user?id="+localStorage.getItem("lastuser");
-                        break;
-                    case "search":
-                        location.href = "/search?id="+localStorage.getItem("lastsearch");
-                        break;
-                    case "notifications":
-                        location.href = "/notifications";
-                        break;
-                    case "follow_requests":
-                        location.href = "/follow_requests";
-                        break;
-                    default:
-                        location.href = "/timeline/"+localStorage.getItem("currentpage");
-                        break;
-                }
+                goBack();
                 e.preventDefault();
             });
         </script>

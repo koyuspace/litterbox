@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { api } from "../api/request";
 import{ renderTimeline } from "../ui/timeline";
+import { goBack } from "./back";
 
 let uploads = [];
 
@@ -46,11 +47,7 @@ export function post() {
     }, localStorage.getItem("token")).then((data) => {
         $("#post-form").val("");
         window.setTimeout(() => {
-            if (id === undefined) {
-                location.reload();
-            } else {
-                location.href = `/thread?id=${data.id}`;
-            }
+            location.href = `/thread?id=${data.id}`;
         }, 100);
     });
 }
