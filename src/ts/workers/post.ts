@@ -2,6 +2,8 @@ import $ from "jquery";
 import { api } from "../api/request";
 import{ renderTimeline } from "../ui/timeline";
 
+let uploads = [];
+
 export function loadPostForm() {
     const id = location.href.split("?id=")[1];
     if (id === undefined) {
@@ -34,7 +36,7 @@ export function post() {
     }
     api(localStorage.getItem("instance"), "/api/v1/statuses", true, "POST", {
         "status": $("#post-form").val(),
-        "media_ids": [],
+        "media_ids": uploads,
         "poll": [],
         "visibility": $("#visibility").val(),
         "spoiler_text": $("#spoiler").val(),
@@ -44,5 +46,31 @@ export function post() {
         window.setTimeout(() => {
             location.reload();
         }, 100);
+    });
+}
+
+export function upload() {
+    var input: any = document.getElementById("file");
+    var file_data = input.files[0];
+    let form_data = new FormData();
+    form_data.append("file", file_data);
+    api(localStorage.getItem("instance"), "/api/v1/media", true, "POST", form_data, localStorage.getItem("token"), true).then((data) => {
+        uploads.push(data.id);
+        localStorage.setItem("uploads", JSON.stringify(uploads));
+        $("#file").val("");
+        $("#media_attachments").append(`<img src="${data.url}" class="file" id="file-${data.id}" height="90">`);
+        $(`#file-${data.id}`).click(() => {
+            const id = $(`#file-${data.id}`).attr("id").replace("file-", "");
+            console.log(id);
+            let tmp = [];
+            uploads.forEach((e) => {
+                if (e !== id) {
+                    tmp.push(e);
+                }
+            });
+            uploads = tmp;
+            localStorage.setItem("uploads", JSON.stringify(uploads));
+            $(`#file-${data.id}`).hide();
+        });
     });
 }

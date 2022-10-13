@@ -9,13 +9,18 @@
     border-radius: 10px;
 }
 
-#followbutton {
+#followbutton,
+#mutebutton,
+#blockbutton {
     color: #fff;
     float: right;
 }
 
-#followbutton .icon {
+#followbutton .icon,
+#mutebutton .icon,
+#blockbutton .icon {
     height: 32px;
+    margin-left: 16px;
 }
 
 #bio {

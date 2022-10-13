@@ -4,7 +4,6 @@ import { api } from "../api/request";
 export function renderFollowRequests() {
     let html = "";
     api(localStorage.getItem("instance"), "/api/v1/follow_requests", true, "GET", {}, localStorage.getItem("token")).then((data) => {
-        console.log(data);
         data.forEach(element => {
             let display_name = element.display_name;
             if (element.emojis.length > 0) {
