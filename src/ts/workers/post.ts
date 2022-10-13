@@ -61,7 +61,6 @@ export function upload() {
         $("#media_attachments").append(`<img src="${data.url}" class="file" id="file-${data.id}" height="90">`);
         $(`#file-${data.id}`).click(() => {
             const id = $(`#file-${data.id}`).attr("id").replace("file-", "");
-            console.log(id);
             let tmp = [];
             uploads.forEach((e) => {
                 if (e !== id) {

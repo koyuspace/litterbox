@@ -11,14 +11,16 @@
 
 #followbutton,
 #mutebutton,
-#blockbutton {
+#blockbutton,
+#notifybutton {
     color: #fff;
     float: right;
 }
 
 #followbutton .icon,
 #mutebutton .icon,
-#blockbutton .icon {
+#blockbutton .icon,
+#notifybutton .icon {
     height: 32px;
     margin-left: 16px;
 }
