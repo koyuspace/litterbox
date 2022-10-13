@@ -17,7 +17,6 @@ function capitalizeFirstLetter(string) {
 
 export function renderTimeline(data, threadmode=false, ispost=false) {
     let statuses = [];
-    console.log(data);
     data.forEach(element => {
         let status = "";
         if (ispost) {
