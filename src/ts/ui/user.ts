@@ -87,7 +87,7 @@ export function loadUser(id) {
                 let inaccurate = "";
                 if (cd[0].acct.includes("@")) {
                     
-                    inaccurate = `The statistics may be inaccurate since this is a remote profile. <a href="https://${cd[0].acct.split("@")[1]}/users/${cd[0].acct.split("@")[0]}" target="_blank">Click here to view the remote profile.</a>`;
+                    inaccurate = `The statistics may be inaccurate since this is a remote profile. <a href="${cd[0].url}" target="_blank">Click here to view the remote profile.</a>`;
                 }
                 html += `<p>Posts: ${cd[0].statuses_count} | Followers: ${cd[0].followers_count} | Following: ${cd[0].following_count}<br><br><i style="display:inline-block; width:60%">${inaccurate}</i></p>`;
                 if (cd[0].last_status_at !== "") {
