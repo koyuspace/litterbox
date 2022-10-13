@@ -10,9 +10,13 @@ export function loadPostForm() {
     if (id !== undefined) {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             if (data.reblog) {
-                $("#post-form").val(`@${data.reblog.account.acct} `);
+                if (data.reblog.account.id !== localStorage.getItem("userid")) {
+                    $("#post-form").val(`@${data.reblog.account.acct} `);
+                }
             } else {
-                $("#post-form").val(`@${data.account.acct} `);
+                if (data.account.id !== localStorage.getItem("userid")) {
+                    $("#post-form").val(`@${data.account.acct} `);
+                }
             }
             $("#context").html(renderTimeline([data]));
         });
@@ -30,7 +34,7 @@ export function post() {
         "poll": [],
         "visibility": $("#visibility").val(),
         "spoiler_text": $("#spoiler").val(),
-        "in_reply_to": id
+        "in_reply_to_id": id
     }, localStorage.getItem("token")).then(() => {
         $("#post-form").val("");
         window.setTimeout(() => {
