@@ -1,3 +1,3 @@
 # litterbox
 
-A simple work-in-progress fediverse client written in Astro
+A simple fediverse client written in Astro
