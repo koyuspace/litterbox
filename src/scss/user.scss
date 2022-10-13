@@ -1,4 +1,4 @@
-@import "../../node_modules/bootstrap/scss/_variables";
+@import "variables";
 
 #user_card {
     text-align: center;
@@ -43,8 +43,12 @@
     vertical-align: middle;
 }
 
-#user_card > h1 > .emoji {
-    height: 2.5rem !important;
+#user_card > h4 > .emoji {
+    height: 1.5rem !important;
     width: auto !important;
     vertical-align: middle;
+}
+
+#user_card > .avatar {
+    vertical-align: top;
 }

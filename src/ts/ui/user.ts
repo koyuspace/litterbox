@@ -64,7 +64,7 @@ export function loadUser(id) {
                 lock = iconLock;
             }
             if (!cd[1].blocking) {
-                html += `<p><h1><img src="${cd[0].avatar}" class="avatar" width="64" height="64" alt="${cd[0].display_name}'s Avatar"> ${display_name}</h1>`;
+                html += `<br><p><h4><img src="${cd[0].avatar}" class="avatar" width="48" height="48" alt="${cd[0].display_name}'s Avatar"> ${display_name}</h4>`;
             } else {
                 html += `<h1>${display_name}</h1>`;
             }
@@ -81,22 +81,25 @@ export function loadUser(id) {
                         bio = bio.replaceAll(`:${bio_emoji.shortcode}:`, `<img src="${bio_emoji.url}" alt="Emoji ${bio_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                html += `<div id="bio">${bio}</div>`;
+                if (cd[0].note !== "") {
+                    html += `<div id="bio">${bio}</div>`;
+                }
                 let inaccurate = "";
                 if (cd[0].acct.includes("@")) {
                     
                     inaccurate = `The statistics may be inaccurate since this is a remote profile. <a href="https://${cd[0].acct.split("@")[1]}/users/${cd[0].acct.split("@")[0]}" target="_blank">Click here to view the remote profile.</a>`;
                 }
                 html += `<p>Posts: ${cd[0].statuses_count} | Followers: ${cd[0].followers_count} | Following: ${cd[0].following_count}<br><br><i style="display:inline-block; width:60%">${inaccurate}</i></p>`;
-                let onlinedate = new Date(Date.parse(cd[0].last_status_at)).toLocaleString();
-                html += `<p>Last online: ${onlinedate}</p>`;
+                if (cd[0].last_status_at !== "") {
+                    let onlinedate = new Date(Date.parse(cd[0].last_status_at)).toLocaleString();
+                    html += `<p>Last online: ${onlinedate}</p>`;
+                }
             }
             html += "</div>";
-            if (!cd[1].blocking) {
+            if (!cd[1].blocking && cd[0].statuses_count !== 0) {
                 html += `<br><br><button onclick="location.reload()" id="reload" class="btn btn-primary" style="float:right;">${iconReload}</button><br><br>`;
             } else {
                 $("#next").hide();
-                $("#reload").hide();
             }
             let ureq = `/api/v1/accounts/${id}/statuses`;
             if (localStorage.getItem("isnextpage") === "true") {

@@ -24,6 +24,7 @@ export function loadPostForm() {
                     $("#post-form").val(`@${data.account.acct} `);
                 }
             }
+            $("#post-form").focus();
             $("#context").html(renderTimeline([data]));
         });
     }
@@ -42,10 +43,14 @@ export function post() {
         "spoiler_text": $("#spoiler").val(),
         "in_reply_to_id": id,
         "sensitive": $("#spoiler").val() !== ""
-    }, localStorage.getItem("token")).then(() => {
+    }, localStorage.getItem("token")).then((data) => {
         $("#post-form").val("");
         window.setTimeout(() => {
-            location.reload();
+            if (id === undefined) {
+                location.reload();
+            } else {
+                location.href = `/thread?id=${data.id}`;
+            }
         }, 100);
     });
 }

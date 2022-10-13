@@ -1,5 +1,4 @@
-@import "../../node_modules/bootstrap/scss/bootstrap";
-@import "../../node_modules/bootstrap/scss/_variables";
+@import "variables";
 
 body {
     color: #fff;
@@ -7,6 +6,7 @@ body {
 
 main {
     padding: 20px;
+    margin-top: 30px;
 }
 
 .logo {
