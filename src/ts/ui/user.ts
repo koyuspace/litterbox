@@ -36,12 +36,12 @@ export function loadUser(id) {
             if (localStorage.getItem("userid") !== cd[0].id) {
                 if (!cd[1].requested) {
                     if (cd[1].following) {
-                        html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton">${iconUnfollow}</a> `;
+                        html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton" title="Unfollow">${iconUnfollow}</a> `;
                     } else {
-                        html += `<a href="/action/follow?id=${cd[0].id}" id="followbutton">${iconFollow}</a> `;
+                        html += `<a href="/action/follow?id=${cd[0].id}" id="followbutton" title="Follow">${iconFollow}</a> `;
                     }
                 } else {
-                    html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton">${iconFollowPending}</a> `
+                    html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton" title="Follow pending">${iconFollowPending}</a> `
                 }
 /*                 if (cd[1].notifying) {
                     html += `<a href="/action/unnotify?id=${cd[0].id}" id="notifybutton">${iconUnnotify}</a>` ;
@@ -49,14 +49,14 @@ export function loadUser(id) {
                     html += `<a href="/action/notify?id=${cd[0].id}" id="notifybutton">${iconNotify}</a> `;
                 } */
                 if (cd[1].blocking) {
-                    html += `<a href="/action/unblock?id=${cd[0].id}" id="blockbutton">${iconUnblock}</a> `;
+                    html += `<a href="/action/unblock?id=${cd[0].id}" id="blockbutton" title="Unblock">${iconUnblock}</a> `;
                 } else {
-                    html += `<a href="/action/block?id=${cd[0].id}" id="blockbutton">${iconBlock}</a> `;
+                    html += `<a href="/action/block?id=${cd[0].id}" id="blockbutton" title="Block">${iconBlock}</a> `;
                 }
                 if (cd[1].muting) {
-                    html += `<a href="/action/unmute?id=${cd[0].id}" id="blockbutton">${iconUnmute}</a>` ;
+                    html += `<a href="/action/unmute?id=${cd[0].id}" id="blockbutton" title="Unmute">${iconUnmute}</a>` ;
                 } else {
-                    html += `<a href="/action/mute?id=${cd[0].id}" id="blockbutton">${iconMute}</a> `;
+                    html += `<a href="/action/mute?id=${cd[0].id}" id="blockbutton" title="Mute">${iconMute}</a> `;
                 }
             }
             let lock = "";

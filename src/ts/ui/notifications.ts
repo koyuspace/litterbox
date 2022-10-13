@@ -31,7 +31,7 @@ export function renderNotifications(data) {
                 notifications += `<li>${display_name.split(" ")[0]}'s poll finished:<br>${renderTimeline([element.status], true, false)}</li>`;
                 break;
             case "follow_request":
-                notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} wants to follow you</li>`;
+                notifications += `<li>${iconFollow} <a href="/follow_requests?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} wants to follow you</li>`;
                 break;
             default:
                 notifications += "<li>Unkown notification type " + element.type + "</li>";

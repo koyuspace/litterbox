@@ -1,6 +1,7 @@
 @import "variables";
 
-#user_card {
+#user_card,
+.user-card {
     text-align: center;
     padding: 10px;
     background-repeat: no-repeat;
@@ -43,12 +44,14 @@
     vertical-align: middle;
 }
 
-#user_card > h4 > .emoji {
+#user_card > h4 > .emoji,
+.user-card > h4 > .emoji {
     height: 1.5rem !important;
     width: auto !important;
     vertical-align: middle;
 }
 
-#user_card > .avatar {
+#user_card > .avatar,
+.user-card > .avatar {
     vertical-align: top;
 }

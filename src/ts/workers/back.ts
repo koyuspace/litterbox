@@ -10,7 +10,7 @@ export function goBack() {
             location.href = "/notifications";
             break;
         case "follow_requests":
-            location.href = "/follow_requests";
+            location.href = "/notifications";
             break;
         default:
             location.href = "/timeline/"+localStorage.getItem("currentpage");
