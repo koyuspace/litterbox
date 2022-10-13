@@ -16,7 +16,7 @@ api(instance, "/api/v1/accounts/verify_credentials", true, "GET", {}, localStora
 export function initializePlaceholders() {
     window.setInterval(() => {
         $(".username").html(username);
-        $(".edit-profile").attr("href", `https://${instance}/settings/user/profile`);
+        $(".edit-profile").attr("href", `https://${instance}/settings/profile`);
     });
 }
 
