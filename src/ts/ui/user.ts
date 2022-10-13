@@ -11,6 +11,8 @@ const iconBlock = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:slash-ci
 const iconUnblock = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:slash-circle-fill"><path fill="currentColor" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"></path></svg>';
 const iconMute = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:eye-slash"><g fill="currentColor"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"></path><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"></path><path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"></path></g></svg>';
 const iconUnmute = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:eye-slash-fill"><g fill="currentColor"><path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7.029 7.029 0 0 0 2.79-.588zM5.21 3.088A7.028 7.028 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474L5.21 3.089z"></path><path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829l-2.83-2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12-.708.708z"></path></g></svg>';
+const iconNotify = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:bell"><path fill="currentColor" d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"></path></svg>';
+const iconUnnotify = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:bell-slash-fill"><path fill="currentColor" d="M5.164 14H15c-1.5-1-2-5.902-2-7 0-.264-.02-.523-.06-.776L5.164 14zm6.288-10.617A4.988 4.988 0 0 0 8.995 2.1a1 1 0 1 0-1.99 0A5.002 5.002 0 0 0 3 7c0 .898-.335 4.342-1.278 6.113l9.73-9.73zM10 15a2 2 0 1 1-4 0h4zm-9.375.625a.53.53 0 0 0 .75.75l14.75-14.75a.53.53 0 0 0-.75-.75L.625 15.625z"></path></svg>';
 
 export function loadUser(id) {
     let html = "";
@@ -41,7 +43,11 @@ export function loadUser(id) {
                 } else {
                     html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton">${iconFollowPending}</a> `
                 }
-                console.log(cd[1]);
+/*                 if (cd[1].notifying) {
+                    html += `<a href="/action/unnotify?id=${cd[0].id}" id="notifybutton">${iconUnnotify}</a>` ;
+                } else {
+                    html += `<a href="/action/notify?id=${cd[0].id}" id="notifybutton">${iconNotify}</a> `;
+                } */
                 if (cd[1].blocking) {
                     html += `<a href="/action/unblock?id=${cd[0].id}" id="blockbutton">${iconUnblock}</a> `;
                 } else {
