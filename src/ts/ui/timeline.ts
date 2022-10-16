@@ -17,7 +17,6 @@ function capitalizeFirstLetter(string) {
 
 export function renderTimeline(data, threadmode=false, ispost=false) {
     let statuses = [];
-    console.log(data);
     data.forEach(element => {
         let status = "";
         if (ispost) {
@@ -37,7 +36,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
             let content = "";
             if (element.reblog !== null) {
                 let reblog_display_name = element.reblog.account.display_name;
-                if (element.reblog.emojis.length > 0) {
+                if (element.reblog.account.emojis.length > 0) {
                     element.reblog.account.emojis.forEach(rdp_emoji => {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
@@ -72,7 +71,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
             let content = "";
             if (element.reblog !== null) {
                 let reblog_display_name = element.reblog.account.display_name;
-                if (element.reblog.emojis.length > 0) {
+                if (element.reblog.account.emojis.length > 0) {
                     element.reblog.account.emojis.forEach(rdp_emoji => {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
