@@ -32,7 +32,7 @@ export function loadSearch(query) {
             html += "<p>No hashtags found.</p>";
         } else {
             data.hashtags.forEach((hashtag) => {
-                html += `<p><a href="${hashtag.url}" target="_blank">${hashtag.name}</a>`;
+                html += `<p><a href="${hashtag.url}" target="_blank">#${hashtag.name}</a>`;
             });
         }
         $("#search").html(html);
