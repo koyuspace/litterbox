@@ -110,7 +110,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         status += `<audio src=${attachment.url} alt="${attachment.description}" class="attachment" controls></audio> `;
                     }
                     if (attachment.type === "gifv") {
-                        status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" muted loop></video> `;
+                        status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" autoplay muted loop></video> `;
                     }
                 } else {
                     status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${attachment.description}"></a> `;
@@ -133,7 +133,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                             status += `<audio src=${attachment.url} alt="${attachment.description}" class="attachment" controls></audio> `;
                         }
                         if (attachment.type === "gifv") {
-                            status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" muted loop></video> `;
+                            status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" autoplay muted loop></video> `;
                         }
                     } else {
                         status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${attachment.description}"></a> `;
