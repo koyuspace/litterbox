@@ -3,3 +3,13 @@
         width: 50%;
     }
 }
+
+@media(max-width:800px) {
+    form[role="search"] {
+        margin: 0 auto;
+        margin-top: 20px;
+    }
+    main {
+        margin-top: 116px;
+    }
+}
