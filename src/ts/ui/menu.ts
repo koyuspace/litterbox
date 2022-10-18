@@ -8,7 +8,7 @@ if (domain.startsWith("localhost")) {
     protocol = "http://";
 }
 
-let page = location.href.replace(protocol+domain+"/", "").replaceAll("/", "--").split("?")[0];
+let page = location.href.replace(/\/+$/, '').replace(protocol+domain+"/", "").replaceAll("/", "--").split("?")[0];
 
 $(`#nav-${page.replaceAll("#", "")}`).attr("class", "nav-link active");
 
