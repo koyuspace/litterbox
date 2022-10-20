@@ -13,7 +13,7 @@ export function renderProfileCards(data) {
         html += `<style>#pc-${element.id} { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${element.header}');</style>`;
         html += `<div class="user-card" id="pc-${element.id}">`;
         html += `<p><h1><a href="/user?id=${element.id}"><img src="${element.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"></a> ${display_name}</h1>`
-        html += `<p style="font-size:8pt;">@${element.acct}</p></div><br><br><br>`;
+        html += `<p style="font-size:8pt;">@${element.acct}</p></div><br>`;
         $(document).ready(() => {
             if (id !== undefined) {
                 if (element.id !== id) {
