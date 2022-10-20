@@ -177,9 +177,9 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         status += "</p><br>";
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
         if (element.reblog === null) {
-            status += `<p><a href="/thread?id=${element.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript: navigator.clipboard.writeText('${element.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
+            status += `<p><a href="/thread?id=${element.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript:navigator.clipboard.writeText('${element.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
         } else {
-            status += `<p><a href="/thread?id=${element.reblog.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript: navigator.clipboard.writeText('${element.reblog.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
+            status += `<p><a href="/thread?id=${element.reblog.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript:navigator.clipboard.writeText('${element.reblog.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
         }
         status += "</div>";
         localStorage.setItem("last-element", element.id);
