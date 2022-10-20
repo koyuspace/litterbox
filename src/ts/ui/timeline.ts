@@ -150,16 +150,16 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         if (threadmode) {
             if (!element.reblog) {
                 if (!element.favourited) {
-                    status += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav}</a> `;
+                    status += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav} ${element.favourites_count}</a> `;
                 } else {
-                    status += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav}</a> `;
+                    status += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav} ${element.favourites_count}</a> `;
                 }
                 if (!element.reblogged) {
-                    status += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost}</a> `;
+                    status += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost} ${element.reblogs_count}</a> `;
                 } else {
-                    status += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost}</a> `;
+                    status += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
                 }
-                status += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply}</a> `;
+                status += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
             } else {
                 if (!element.reblog.favourited) {
                     status += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
