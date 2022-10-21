@@ -1,3 +1,25 @@
-<p>Redirecting...</p>
-<noscript><p>If redirecting fails try enabling JavaScript.</p></noscript>
-<scope />
+---
+import Layout from "./base.astro";
+---
+<Layout>
+    <main>
+        <h3>Loading...</h3>
+        <noscript><p>If loading fails try enabling JavaScript.</p></noscript>
+        <p id="error" style="display: none;">Loading failed. <a href="javascript:history.back()">Click here</a> to go back to the previous site.</p>
+        <scope />
+    </main>
+</Layout>
+
+<script>
+    import $ from "jquery";
+    window.setTimeout(() => {
+        $("h3").hide();
+        $("#error").show();
+    }, 3000);
+</script>
+
+<style scoped>
+    main {
+        margin-top: 0 !important;
+    }
+</style>
