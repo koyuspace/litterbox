@@ -21,6 +21,9 @@ export function loadUser(id) {
     api(localStorage.getItem("instance"), `/api/v1/accounts/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
         cd[0] = data;
     }).then(() => {
+        $("#next").show();
+        $("#reload").show();
+        $("#loaduser").hide();
         api(localStorage.getItem("instance"), `/api/v1/accounts/relationships?id=${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             cd[1] = data[0];
         }).then(() => {
@@ -114,7 +117,7 @@ export function loadUser(id) {
                 $("#user").html(html);
                 $("#loaduser").click((e) => {
                     e.preventDefault();
-                    location.reload();
+                    loadUser(id);
                 });
                 $("#loadfollowers").click((e) => {
                     e.preventDefault();
@@ -127,7 +130,8 @@ export function loadUser(id) {
             }).catch(() => {
                 $("#user").html(html);
                 $("#loaduser").click((e) => {
-                    location.reload();
+                    e.preventDefault();
+                    loadUser(id);
                 });
                 $("#loadfollowers").click((e) => {
                     e.preventDefault();
@@ -143,7 +147,7 @@ export function loadUser(id) {
 }
 
 export function loadFollowers(id) {
-    let html = "";
+    let html = "<h3>Followers</h3>";
     api(localStorage.getItem("instance"), `/api/v1/accounts/${id}/followers`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
         html += renderProfileCards(data);
     }).then(() => {
@@ -157,7 +161,7 @@ export function loadFollowers(id) {
 }
 
 export function loadFollowings(id) {
-    let html = "";
+    let html = "<h3>Followings</h3>";
     api(localStorage.getItem("instance"), `/api/v1/accounts/${id}/following`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
         html += renderProfileCards(data);
     }).then(() => {
