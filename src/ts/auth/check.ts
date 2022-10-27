@@ -7,7 +7,7 @@ export function checkLogin() {
 }
 
 export function checkForLogin() {
-    if (!localStorage.getItem("token") === null) {
+    if (localStorage.getItem("token") !== null) {
         location.href = "/timeline/home";
     }
 }
