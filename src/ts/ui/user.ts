@@ -66,7 +66,7 @@ export function loadUser(id) {
                 lock = iconLock;
             }
             if (!cd[1].blocking) {
-                html += `<br><h4><img src="${cd[0].avatar}" class="avatar" width="48" height="48" alt="${cd[0].display_name}'s Avatar"> ${display_name}</h4><br>`;
+                html += `<br><br><h4><img src="${cd[0].avatar}" class="avatar" width="48" height="48" alt="${cd[0].display_name}'s Avatar"> ${display_name}</h4><br>`;
             } else {
                 html += `<h1>${display_name}</h1>`;
             }
