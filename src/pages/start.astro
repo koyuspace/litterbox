@@ -17,3 +17,18 @@ import Layout from "../layouts/landing.astro";
         </p>
     </div>
 </Layout>
+
+<script>
+    import { checkForLogin } from "../ts/auth/check";
+    import { checkInstance } from "../ts/workers/landing";
+    import $ from "jquery";
+    checkForLogin();
+    $(document).ready(() => {
+        if (checkInstance() !== "" && localStorage.getItem("token") === null) {
+            $("input[name=\"instance\"]").val(checkInstance());
+            window.setTimeout(() => {
+                $("form").submit();
+            }, 20);
+        }
+    });
+</script>
