@@ -9,17 +9,17 @@
 
 .attachment {
     vertical-align: middle;
-    margin-right: 20px;
+    min-height: 230px;
 }
 
 .attachments {
     background: darken($gray-800, 10%);
     border-radius: 4px;
-    min-height: 230px;
     margin-top: 30px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 a .invisible {
