@@ -40,14 +40,18 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         } else {
             status = "<div class=\"card status\">";
         }
-        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a></div><br>`;
+        status += '<div style="margin-right:4px;margin-top:20px;">';
+        status += `<a href="/user?id=${element.account.id}" style="float:right;"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
                 display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
             });
         }
-        status += `<p style="margin-top:-74px;"><b class="display-name" id="dp-${element.account.id}">${display_name}</b></p>`;
+        status += `<h4 class="display-name" id="dp-${element.account.id}" style="margin-top: 20px;">${display_name}</h4></div>`;
+        if (element.reblog === null) {
+            status += "<br>";
+        }
         if (element.spoiler_text !== "") {
             let content = "";
             if (element.reblog !== null) {
@@ -57,7 +61,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                status += `<br><br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p>`;
+                status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
                 content = element.reblog.content;
             }
             if (element.reblog === null) {
@@ -75,9 +79,8 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                 }
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
-            status += "<br><br>";
             status += `
-            <p style="margin-top:35px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
+            <p style="margin-top:15px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
             </a>
             <div class="collapse" class="status-content" id="status-${element.id}">
@@ -92,7 +95,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                status += `<br><br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p>`;
+                status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
                 content = element.reblog.content;
             }
             if (element.reblog === null) {
@@ -111,10 +114,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
             if (content !== "") {
-                if (element.reblog === null) {
-                    status += "<br>";
-                }
-                status += `<br>${content}`;
+                status += `${content}`;
             }
         }
         if (element.media_attachments.length > 0) {
@@ -204,9 +204,9 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         }
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
         if (threadmode || element.account.acct === acct) {
-            status += `<br><br><hr><p class="actions">${actions}</p>`;
+            status += `<hr><p class="actions">${actions}</p>`;
         } else {
-            status += "<br><br><hr>"
+            status += "<hr>"
         }
         if (element.reblog === null) {
             status += `<p><a href="/thread?id=${element.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript:navigator.clipboard.writeText('${element.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
