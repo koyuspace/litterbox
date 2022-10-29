@@ -1,15 +1,30 @@
 @media(min-width:800px) {
     .center {
         width: 50%;
+        text-align: center;
+    }
+    .center2 {
+        width: 60%;
+        margin: 0 auto;
+    }
+    .status,
+    .card {
+        width: 60%;
+        margin: 20px auto;
     }
 }
 
 @media(max-width:800px) {
     form[role="search"] {
         margin: 0 auto;
-        margin-top: 20px;
     }
     main {
-        margin-top: 116px;
+        margin-top: 98px;
+    }
+    .attachment {
+        width: 100%;
+    }
+    nav .d-flex {
+        margin-top: 14px;
     }
 }

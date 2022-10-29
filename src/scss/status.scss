@@ -3,31 +3,31 @@
 .status {
     margin: 10px;
     padding: 10px;
+    background: lighten($gray-900, 5%);
 }
 
 .attachment {
     vertical-align: middle;
-    padding: 10px;
 }
 
 .attachments {
-    background: lighten($gray-900, 5%);
-    text-align: center;
+    background: darken($gray-800, 10%);
     border-radius: 4px;
+    min-height: 230px;
     margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 a .invisible {
     visibility: visible !important;
 }
 
-.bg-darker {
-    background: darken($gray-900, 5%);
-}
-
 .emoji {
-    height: 16px;
-    width: auto;
+    height: auto;
+    max-width: 16px;
 }
 
 .status-content > .attachment {
@@ -36,4 +36,8 @@ a .invisible {
 
 #file {
     background-image: none !important;
+}
+
+.actions {
+    margin-bottom: 10px !important;
 }

@@ -3,23 +3,23 @@ import Layout from "../layouts/default.astro";
 ---
 
 <Layout>
-    <div class="center">
+    <div class="center2">
         <a href="#" id="back">&larr; Back</a>
-        <div id="ancestors"></div>
-        <div id="status"></div>
-        <div id="descendants"></div>
-        <script>
-            import $ from "jquery";
-            import { loadThread } from "../ts/ui/thread";
-            import { goBack } from "../ts/workers/back";
-            import { checkReload }  from "../ts/workers/checkreload";
-            const id = location.href.split("?id=")[1];
-            checkReload();
-            loadThread(id);
-            $("#back").click((e) => {
-                goBack();
-                e.preventDefault();
-            });
-        </script>
     </div>
+    <div id="ancestors"></div>
+    <div id="status"></div>
+    <div id="descendants"></div>
+    <script>
+        import $ from "jquery";
+        import { loadThread } from "../ts/ui/thread";
+        import { goBack } from "../ts/workers/back";
+        import { checkReload }  from "../ts/workers/checkreload";
+        const id = location.href.split("?id=")[1];
+        checkReload();
+        loadThread(id);
+        $("#back").click((e) => {
+            goBack();
+            e.preventDefault();
+        });
+    </script>
 </Layout>

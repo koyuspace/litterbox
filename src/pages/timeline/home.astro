@@ -1,17 +1,19 @@
 ---
-import Statusbox from "../../components/ui/statusbox.astro";
 import Welcome from "../../components/home/welcome.astro";
 import Home from "../../components/timelines/home.astro";
 import Layout from "../../layouts/default.astro";
 ---
 
 <Layout>
-    <div class="center">
+    <div class="center2">
         <Welcome />
-        <Home />
-        <br><br><br>
+    </div>
+    <Home />
+    <br>
+    <div class="center">
         <a href="#" id="next" class="btn btn-primary">Next page &rarr;</a>
     </div>
+    <br><br>
 </Layout>
 
 <script>

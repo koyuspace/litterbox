@@ -1,8 +1,3 @@
----
-import Reload from "../../components/ui/reload.astro";
-import Icon from "astro-icon";
----
-
 <script>
     import { loadHome } from "../../ts/timelines/home";
     import { checkReload } from "../../ts/workers/checkreload";
@@ -10,5 +5,4 @@ import Icon from "astro-icon";
     checkReload();
     loadHome();
 </script>
-<Reload /><br><br><br>
 <div id="home">Loading...</div>

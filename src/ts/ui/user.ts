@@ -7,7 +7,6 @@ const iconFollow = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:person-
 const iconUnfollow = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:person-dash-fill"><g fill="currentColor"><path fill-rule="evenodd" d="M11 7.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"></path><path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></g></svg>';
 const iconFollowPending = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:person-check-fill"><g fill="currentColor"><path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"></path><path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></g></svg>';
 const iconLock = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:lock-fill"><path fill="currentColor" d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"></path></svg>';
-const iconReload = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:arrow-clockwise"><g fill="currentColor"><path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"></path><path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"></path></g></svg>';
 const iconBlock = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:slash-circle"><g fill="currentColor"><path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"></path><path d="M11.354 4.646a.5.5 0 0 0-.708 0l-6 6a.5.5 0 0 0 .708.708l6-6a.5.5 0 0 0 0-.708z"></path></g></svg>';
 const iconUnblock = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:slash-circle-fill"><path fill="currentColor" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.646-2.646a.5.5 0 0 0-.708-.708l-6 6a.5.5 0 0 0 .708.708l6-6z"></path></svg>';
 const iconMute = '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:eye-slash"><g fill="currentColor"><path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"></path><path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"></path><path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"></path></g></svg>';
@@ -22,7 +21,6 @@ export function loadUser(id) {
         cd[0] = data;
     }).then(() => {
         $("#next").show();
-        $("#reload").show();
         $("#loaduser").hide();
         api(localStorage.getItem("instance"), `/api/v1/accounts/relationships?id=${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             cd[1] = data[0];
@@ -36,7 +34,7 @@ export function loadUser(id) {
                 }
             } catch (e) {}
             html += `<style>#user_card { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${cd[0].header}');</style>`;
-            html += "<div id=\"user_card\">"
+            html += "<div id=\"user_card\" class=\"center2\">"
             if (localStorage.getItem("userid") !== cd[0].id) {
                 if (!cd[1].requested) {
                     if (cd[1].following) {
@@ -101,15 +99,14 @@ export function loadUser(id) {
                 }
             }
             html += "</div>";
-            if (!cd[1].blocking && cd[0].statuses_count !== 0) {
-                html += `<br><br><button onclick="location.reload()" id="reload" class="btn btn-primary" style="float:right;">${iconReload}</button><br><br>`;
-            } else {
+            if (!cd[1].blocking && cd[0].statuses_count === 0) {
                 $("#next").hide();
             }
             let ureq = `/api/v1/accounts/${id}/statuses`;
             if (localStorage.getItem("isnextpage") === "true") {
                 ureq = ureq+"?max_id="+localStorage.getItem("last-element");
                 localStorage.setItem("isnextpage", "false");
+                window.scrollTo(0,0);
             }
             api(localStorage.getItem("instance"), ureq, true, "GET", {}, localStorage.getItem("token")).then((data) => {
                 $("#user-content").html(renderTimeline(data));
@@ -147,29 +144,23 @@ export function loadUser(id) {
 }
 
 export function loadFollowers(id) {
-    let html = "<h3>Followers</h3>";
+    let html = "<div class=\"center2\"><h3>Followers</h3>";
     api(localStorage.getItem("instance"), `/api/v1/accounts/${id}/followers`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
-        html += renderProfileCards(data);
+        html += renderProfileCards(data)+"</div>";
     }).then(() => {
         $("#user-content").html(html);
-        const el = document.getElementById("reload");
-        el.scrollIntoView();
         $("#next").hide();
-        $("#reload").hide();
         $("#loaduser").show();
     })
 }
 
 export function loadFollowings(id) {
-    let html = "<h3>Followings</h3>";
+    let html = "<div class=\"center2\"><h3>Followings</h3>";
     api(localStorage.getItem("instance"), `/api/v1/accounts/${id}/following`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
-        html += renderProfileCards(data);
+        html += renderProfileCards(data)+"</div>";
     }).then(() => {
         $("#user-content").html(html);
-        const el = document.getElementById("reload");
-        el.scrollIntoView();
         $("#next").hide();
-        $("#reload").hide();
         $("#loaduser").show();
     })
 }

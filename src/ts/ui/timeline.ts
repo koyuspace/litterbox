@@ -1,4 +1,20 @@
 import { api } from "../api/request";
+import { decode } from "blurhash";
+
+var escapeHTML = function(unsafe) {
+    return unsafe.replace(/[&<"']/g, function(m) {
+    switch (m) {
+        case '&':
+            return '&amp;';
+        case '<':
+            return '&lt;';
+        case '"':
+            return '&quot;';
+        default:
+            return '&#039;';
+    }
+    });
+};
 
 api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((ad) => {
     localStorage.setItem("acct", ad.acct);
@@ -22,9 +38,9 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
         if (ispost) {
             status = "<div class=\"card bg-darker status\" id=\"post\">";
         } else {
-            status = "<div class=\"card bg-dark status\">";
+            status = "<div class=\"card status\">";
         }
-        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a></div>`;
+        status += `<div style="text-align: right;margin:10px;"><a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a></div><br>`;
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
             element.account.emojis.forEach(dp_emoji => {
@@ -41,7 +57,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+                status += `<br><br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p>`;
                 content = element.reblog.content;
             }
             if (element.reblog === null) {
@@ -59,14 +75,14 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                 }
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
+            status += "<br><br>";
             status += `
             <p style="margin-top:35px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                 <i>${element.spoiler_text}</i> (click to open)
             </a>
             <div class="collapse" class="status-content" id="status-${element.id}">
                 ${content}
-            </div></p>
-            `
+            </div></p>`;
         } else {
             let content = "";
             if (element.reblog !== null) {
@@ -76,7 +92,7 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                         reblog_display_name = reblog_display_name.replaceAll(`:${rdp_emoji.shortcode}:`, `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`);
                     });
                 }
-                status += `<p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+                status += `<br><br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p>`;
                 content = element.reblog.content;
             }
             if (element.reblog === null) {
@@ -94,88 +110,104 @@ export function renderTimeline(data, threadmode=false, ispost=false) {
                 }
             }
             content = content.replaceAll("<a href=\"", "<a target=\"_blank\" href=\"");
-            status += `<p id="status-${element.id}" style="margin-top:35px;"  class="status-content">${content}</p>`;
+            if (content !== "") {
+                if (element.reblog === null) {
+                    status += "<br>";
+                }
+                status += `<br>${content}`;
+            }
         }
         if (element.media_attachments.length > 0) {
-            status += "<p class=\"attachments\">";
+            let decoded = decode(element.media_attachments[0].blurhash, 1, 1);
+            status += `<style>#attachments-${element.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
+            status += `<div class="attachments" id="attachments-${element.media_attachments[0].id}">`;
             element.media_attachments.forEach((attachment) => {
+                let alt = attachment.description !== null ? escapeHTML(attachment.description) : "";
                 if (!element.sensitive) {
                     if (attachment.type === "image") {
-                        status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                        status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
                     }
                     if (attachment.type === "video") {
-                        status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" controls></video> `;
+                        status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" controls></video> `;
                     }
                     if (attachment.type === "audio") {
-                        status += `<audio src=${attachment.url} alt="${attachment.description}" class="attachment" controls></audio> `;
+                        status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" controls></audio> `;
                     }
                     if (attachment.type === "gifv") {
-                        status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" autoplay muted loop></video> `;
+                        status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" autoplay muted loop></video> `;
                     }
                 } else {
-                    status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                    status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
                 }
             });
-            status += "</p>";
+            status += "</div>";
         }
         if (element.reblog !== null) {
             if (element.reblog.media_attachments.length > 0) {
-                status += "<p class=\"attachments\">";
+                let decoded = decode(element.reblog.media_attachments[0].blurhash, 1, 1);
+                status += `<style>#attachments-${element.reblog.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
+                status += `<div class="attachments" id="attachments-${element.reblog.media_attachments[0].id}">`;
                 element.reblog.media_attachments.forEach((attachment) => {
+                    let alt = attachment.description !== null ? escapeHTML(attachment.description) : "";
                     if (!element.sensitive) {
+                        let alt = attachment.description !== null ? escapeHTML(attachment.description) : "";
                         if (attachment.type === "image") {
-                            status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                            status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
                         }
                         if (attachment.type === "video") {
-                            status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" controls></video> `;
+                            status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" controls></video> `;
                         }
                         if (attachment.type === "audio") {
-                            status += `<audio src=${attachment.url} alt="${attachment.description}" class="attachment" controls></audio> `;
+                            status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" controls></audio> `;
                         }
                         if (attachment.type === "gifv") {
-                            status += `<video src=${attachment.url} width="300" alt="${attachment.description}" class="attachment" autoplay muted loop></video> `;
+                            status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" autoplay muted loop></video> `;
                         }
                     } else {
-                        status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${attachment.description}"></a> `;
+                        status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
                     }
                 });
-                status += "</p>";
+                status += "</div>";
             }
         }
         const acct = localStorage.getItem("acct");
-        status += "<p class=\"actions\">";
+        let actions = "";
         if (element.account.acct === acct) {
-            status += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
+            actions += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
         }
         if (threadmode) {
             if (!element.reblog) {
                 if (!element.favourited) {
-                    status += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav} ${element.favourites_count}</a> `;
+                    actions += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav} ${element.favourites_count}</a> `;
                 } else {
-                    status += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav} ${element.favourites_count}</a> `;
+                    actions += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav} ${element.favourites_count}</a> `;
                 }
                 if (!element.reblogged) {
-                    status += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost} ${element.reblogs_count}</a> `;
+                    actions += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost} ${element.reblogs_count}</a> `;
                 } else {
-                    status += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
+                    actions += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
                 }
-                status += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
+                actions += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
             } else {
                 if (!element.reblog.favourited) {
-                    status += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
+                    actions += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
                 } else {
-                    status += `<a href="/action/unfav?id=${element.reblog.id}" class="btn btn-warning">${iconUnfav}</a> `;
+                    actions += `<a href="/action/unfav?id=${element.reblog.id}" class="btn btn-warning">${iconUnfav}</a> `;
                 }
                 if (!element.reblog.reblogged) {
-                    status += `<a href="/action/boost?id=${element.reblog.id}" class="btn btn-secondary">${iconBoost}</a> `;
+                    actions += `<a href="/action/boost?id=${element.reblog.id}" class="btn btn-secondary">${iconBoost}</a> `;
                 } else {
-                    status += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
+                    actions += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
                 }
-                status += `<a href="/action/reply?id=${element.reblog.id}" class="btn btn-secondary">${iconReply}</a> `;
+                actions += `<a href="/action/reply?id=${element.reblog.id}" class="btn btn-secondary">${iconReply}</a> `;
             }
         }
-        status += "</p><br>";
         let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
+        if (threadmode || element.account.acct === acct) {
+            status += `<br><br><hr><p class="actions">${actions}</p>`;
+        } else {
+            status += "<br><br><hr>"
+        }
         if (element.reblog === null) {
             status += `<p><a href="/thread?id=${element.id}">${statusdate}</a> | ${capitalizeFirstLetter(element.visibility)} | <a href="javascript:navigator.clipboard.writeText('${element.url}')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
         } else {

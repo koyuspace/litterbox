@@ -763,6 +763,11 @@ bl@^5.0.0:
     inherits "^2.0.4"
     readable-stream "^3.4.0"
 
+blurhash@^2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/blurhash/-/blurhash-2.0.3.tgz#5c1166bf5b65e09e337fe5b8c6b53e1218085b0b"
+  integrity sha512-nTnJTOheiaV3b189f7rH5AbbrnQB2r3CcOZBg47GUDaE9DrxyBPD2w0HYp4ME2UBlTP7LMIa6nMWqg/58oyIzA==
+
 boolbase@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"

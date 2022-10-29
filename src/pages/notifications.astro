@@ -6,6 +6,19 @@ import Layout from "../layouts/default.astro";
 <Layout>
     <div class="center">
         <h1>Notifications</h1>
-        <Notifications />
     </div>
+    <Notifications />
 </Layout>
+
+<style is:inline>
+    .status {
+        margin: 20px !important;
+        width: calc(100% - 40px);
+    }
+    @media(min-width:800px) {
+        #notifications {
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+</style>

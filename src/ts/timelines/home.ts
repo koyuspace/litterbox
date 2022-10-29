@@ -7,6 +7,9 @@ export function loadHome() {
     if (localStorage.getItem("isnextpage") === "true") {
         hreq = hreq+"?max_id="+localStorage.getItem("last-element");
         localStorage.setItem("isnextpage", "false");
+        window.setTimeout(() => {
+            window.scrollTo(0,0);
+        }, 500);
     }
     api(localStorage.getItem("instance"), hreq, true, "GET", {}, localStorage.getItem("token")).then((data) => {
         $("#home").html(renderTimeline(data));

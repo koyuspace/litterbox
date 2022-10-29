@@ -1,7 +1,3 @@
----
-import Reload from "../components/ui/reload.astro";
----
-
 <script>
     import $ from "jquery";
     import { renderFollowRequests } from "../ts/ui/follow_requests"
@@ -11,5 +7,4 @@ import Reload from "../components/ui/reload.astro";
         renderFollowRequests();
     });
 </script>
-<Reload /><br><br><br>
 <div id="follow_requests">Loading...</div>

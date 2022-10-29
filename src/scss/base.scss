@@ -38,7 +38,9 @@ main {
 }
 
 .icon {
-    height: 16px;
+    height: 19px;
+    margin-top: -5px;
+    margin-left: 2px;
 }
 
 #logo {
@@ -56,4 +58,22 @@ footer a svg {
 li svg {
     height: 16px;
     color: #fff;
+}
+
+.bg-darker {
+    background: darken($gray-900, 5%) !important;
+}
+
+nav,
+footer {
+    background-color: rgba(darken($gray-900, 5%), 0.8);
+    backdrop-filter: saturate(200%) blur(10px);
+}
+
+nav .btn {
+    margin-left: 8px;
+}
+
+p {
+    margin-bottom: 0 !important;
 }

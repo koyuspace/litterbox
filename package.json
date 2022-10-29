@@ -13,6 +13,7 @@
   "dependencies": {
     "astro": "^1.4.7",
     "astro-icon": "^0.7.3",
+    "blurhash": "^2.0.3",
     "bootstrap": "^5.2.2",
     "jquery": "^3.6.1",
     "sass": "^1.55.0"

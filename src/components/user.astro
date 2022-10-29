@@ -1,6 +1,6 @@
 <script>
     import $ from "jquery";
-    import { loadUser, loadFollowers } from "../ts/ui/user";
+    import { loadUser } from "../ts/ui/user";
     import { checkReload } from "../ts/workers/checkreload";
     localStorage.setItem("currentpage", "user");
     checkReload();
@@ -10,5 +10,8 @@
     $("#loaduser").hide();
 </script>
 <div id="user">Loading...</div>
-<p><a href="#" id="loaduser">&larr; Back</a></p>
+<br>
+<div class="center2">
+    <p><a href="#" id="loaduser">&larr; Back</a></p>
+</div>
 <div id="user-content"></div>

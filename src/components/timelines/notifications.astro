@@ -1,8 +1,3 @@
----
-import Reload from "../../components/ui/reload.astro";
-import Icon from "astro-icon";
----
-
 <script>
     import $ from "jquery";
     import { loadNotifications } from "../../ts/timelines/notifications";
@@ -10,8 +5,7 @@ import Icon from "astro-icon";
     localStorage.setItem("currentpage", "notifications");
     checkReload();
     $(document).ready(() => {
-        $("#notifications").html(loadNotifications());
+        loadNotifications();
     });
 </script>
-<Reload /> <button onclick="location.href='/action/deletenotifications'" class="btn btn-danger" style="float:right;margin-right:8px;"><Icon name="bi:trash" /></button><br><br><br>
 <div id="notifications">Loading...</div>
