@@ -74,7 +74,11 @@ export function loadUser(id) {
                 if (cd[1].followed_by) {
                     html += "<span class=\"badge bg-secondary\">Follows you!</span></p><br>";
                 } else {
-                    html += "</p>";
+                    if (cd[0].bot) {
+                        html += "<span class=\"badge bg-secondary\">Bot</span></p><br>";
+                    } else {
+                        html += "</p>";
+                    }
                 }
                 html += `<div id="acct">@${cd[0].acct} ${lock}</div>`;
                 let bio = cd[0].note;
