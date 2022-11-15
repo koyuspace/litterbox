@@ -40,6 +40,12 @@ export function renderNotifications(data) {
             case "admin.sign_up":
                     notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} signed up on your server</li>`;
                     break;
+            case "update":
+                notifications += `<li>${iconBoost} The post you boosted was updated<br>${renderTimeline([element.status])}</li>`
+                break;
+            case "status":
+                notifications += `<li>${renderTimeline([element.status])}</li>`;
+                break;
             default:
                 notifications += "<li>Unkown notification type " + element.type + "</li>";
                 break;
