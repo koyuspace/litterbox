@@ -12,7 +12,7 @@ export function renderFollowRequests() {
                     display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
                 });
             }
-            html += `<style>#fr-${element.id} { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${element.header}');</style>`;
+            html += `<style>#fr-${element.id} { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${element.header}') center center no-repeat; background-size: cover; }</style>`;
             html += `<div class="user-card" id="fr-${element.id}">`;
             html += `<p><h1><img src="${element.avatar}" class="avatar" width="64" height="64" alt="${element.display_name}'s Avatar"> ${display_name}</h1>`
             html += `<p style="font-size:8pt;">@${element.acct}</p>`;

@@ -33,7 +33,7 @@ export function loadUser(id) {
                     });
                 }
             } catch (e) {}
-            html += `<style>#user_card { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${cd[0].header}');</style>`;
+            html += `<style>#user_card { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${cd[0].header}') center center no-repeat;background-size: cover; }</style>`;
             html += "<div id=\"user_card\" class=\"center2\">"
             if (localStorage.getItem("userid") !== cd[0].id) {
                 if (!cd[1].requested) {
