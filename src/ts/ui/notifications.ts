@@ -42,7 +42,6 @@ export function renderNotifications(data) {
                     notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} signed up on your server</li>`;
                     break;
             case "admin.report":
-                console.log(element);
                 notifications += `<li>${iconMessage} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} opened a new report<br><br><a href="https://${localStorage.getItem("instance")}/admin/reports/${element.report.id}" target="_blank">#${element.report.id}</a><br><i>"${element.report.comment}"</i></li>`;
                 break;
             case "update":
