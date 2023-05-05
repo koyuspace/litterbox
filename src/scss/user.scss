@@ -2,56 +2,49 @@
 
 #user_card,
 .user-card {
-    text-align: center;
-    padding: 15px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
+  text-align: center;
+  padding: 15px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 10px;
 }
 
 #followbutton,
 #mutebutton,
 #blockbutton,
 #notifybutton {
-    color: #fff;
-    float: right;
+  color: #fff;
+  float: right;
 }
 
 #followbutton .icon,
 #mutebutton .icon,
 #blockbutton .icon,
 #notifybutton .icon {
-    height: 32px;
-    margin-left: 16px;
+  height: 32px;
+  margin-left: 16px;
 }
 
 #bio {
-    background: $gray-800;
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 4px;
-    margin-bottom: 20px;
+  background: $gray-800;
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
 }
 
 #acct {
-    margin-top: -10px;
-    font-size: 8pt;
+  margin-top: -10px;
+  font-size: 8pt;
 }
 
 #acct .icon {
-    height: 8pt;
-    vertical-align: middle;
-}
-
-#user_card > h4 > .emoji,
-.user-card > h4 > .emoji {
-    height: 1.5rem !important;
-    width: auto !important;
-    vertical-align: middle;
+  height: 8pt;
+  vertical-align: middle;
 }
 
 #user_card > .avatar,
 .user-card > .avatar {
-    vertical-align: top;
+  vertical-align: top;
 }

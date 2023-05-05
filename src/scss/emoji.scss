@@ -1,4 +1,5 @@
-.display-name .emoji {
-    height: auto;
-    max-width: 16px;
+.emoji {
+  height: auto;
+  width: auto !important;
+  margin-top: -5px;
 }

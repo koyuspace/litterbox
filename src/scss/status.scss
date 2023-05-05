@@ -1,44 +1,44 @@
 @import "variables";
 
 .status {
-    margin: 10px;
-    padding: 16px;
-    padding-top: 0px;
-    background: lighten($gray-900, 5%);
+  margin: 10px;
+  padding: 16px;
+  padding-top: 0px;
+  background: lighten($gray-900, 5%);
 }
 
 .attachment {
-    vertical-align: middle;
-    min-height: 230px;
+  vertical-align: middle;
+  min-height: 230px;
 }
 
 .attachments {
-    background: darken($gray-800, 10%);
-    border-radius: 4px;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
+  background: darken($gray-800, 10%);
+  border-radius: 4px;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 a .invisible {
-    visibility: visible !important;
+  visibility: visible !important;
 }
 
 .emoji {
-    height: auto;
-    max-width: 16px;
+  height: auto;
+  max-width: 24px;
 }
 
 .status-content > .attachment {
-    display: none;
+  display: none;
 }
 
 #file {
-    background-image: none !important;
+  background-image: none !important;
 }
 
 .actions {
-    margin-bottom: 10px !important;
+  margin-bottom: 10px !important;
 }
