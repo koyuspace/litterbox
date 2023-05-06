@@ -11,7 +11,7 @@ import Layout from "../layouts/landing.astro";
         <p class="lead">
             <form action="/login" method="GET">
                 <input type="hidden" value="cutebox.cc" class="form-control" name="instance" placeholder="yourinstance.tld">
-                <input type="submit" class="btn btn-lg btn-primary" role="button" value="Log in">
+                <input type="submit" class="btn btn-lg btn-primary" id="login" role="button" value="Log in">
             </form>
         </p>
     </div>
@@ -31,3 +31,10 @@ import Layout from "../layouts/landing.astro";
         }
     });
 </script>
+
+<style>
+    #login {
+        display: block;
+        margin: 0 auto;
+    }
+</style>
