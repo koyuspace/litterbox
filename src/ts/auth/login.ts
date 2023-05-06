@@ -16,10 +16,10 @@ localStorage.setItem("scopes", scopes);
 localStorage.setItem("redirect_uri", redirect_uri);
 
 api(instance, "/api/v1/apps", false, "POST", {
-    "client_name": "litterbox",
+    "client_name": "cutebox",
     "redirect_uris": redirect_uri,
     "scopes": scopes,
-    "website": "https://litterbox.koyu.space"
+    "website": "https://cutebox.koyu.space"
 }).then((data) => {
     localStorage.setItem("app", JSON.stringify(data));
     window.setTimeout(() => {

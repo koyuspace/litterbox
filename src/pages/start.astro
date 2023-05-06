@@ -4,14 +4,13 @@ import Layout from "../layouts/landing.astro";
 
 <Layout>
     <div class="jumbotron">
-        <img src="/cat.png" height="220" class="logo">
-        <h1 class="display-4 lead">Welcome to litterbox!</h1>
-        <p class="lead">The simple client for the Fediverse. Enter your instance and click the login button to use it.</p>
+        <img src="/logo.png" height="220" class="logo">
+        <h1 class="display-4 lead">Welcome to cutebox!</h1>
+        <p class="lead">The simple social networking server for the Fediverse. Click the login button to use it.</p>
         <hr class="my-4">
         <p class="lead">
-            <form action="/login" method="GET" class="input-group">
-                <span class="input-group-text" id="addon-wrapping">https://</span>
-                <input type="text" class="form-control" name="instance" placeholder="yourinstance.tld">
+            <form action="/login" method="GET">
+                <input type="hidden" value="cutebox.cc" class="form-control" name="instance" placeholder="yourinstance.tld">
                 <input type="submit" class="btn btn-lg btn-primary" role="button" value="Log in">
             </form>
         </p>
