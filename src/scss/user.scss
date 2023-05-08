@@ -13,7 +13,9 @@
 #followbutton,
 #mutebutton,
 #blockbutton,
-#notifybutton {
+#notifybutton,
+#makeunfollowbutton,
+#nfollowbutton {
   color: #fff;
   float: right;
 }
@@ -21,7 +23,9 @@
 #followbutton .icon,
 #mutebutton .icon,
 #blockbutton .icon,
-#notifybutton .icon {
+#notifybutton .icon,
+#makeunfollowbutton .icon,
+#nfollowbutton .icon {
   height: 32px;
   margin-left: 16px;
 }

@@ -45,167 +45,131 @@ function capitalizeFirstLetter(string) {
 }
 
 export function renderTimeline(data, threadmode = false, ispost = false) {
-  let statuses = [];
-  data.forEach((element) => {
-    let status = "";
-    if (ispost) {
-      status = '<div class="card bg-darker status" id="post">';
-    } else {
-      status = '<div class="card status">';
-    }
-    status += '<div style="margin-right:4px;margin-top:20px;">';
-    status += `<a href="/user?id=${element.account.id}" style="float:right;"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a>`;
-    let display_name = element.account.display_name;
-    if (element.account.emojis.length > 0) {
-      element.account.emojis.forEach((dp_emoji) => {
-        display_name = display_name.replaceAll(
-          `:${dp_emoji.shortcode}:`,
-          `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`
-        );
-      });
-    }
-    status += `<h4 class="display-name" id="dp-${element.account.id}" style="margin-top: 20px;">${display_name}</h4></div>`;
-    if (element.reblog === null) {
-      status += "<br>";
-    }
-    if (element.spoiler_text !== "") {
-      let content = "";
-      if (element.reblog !== null) {
-        let reblog_display_name = element.reblog.account.display_name;
-        if (element.reblog.account.emojis.length > 0) {
-          element.reblog.account.emojis.forEach((rdp_emoji) => {
-            reblog_display_name = reblog_display_name.replaceAll(
-              `:${rdp_emoji.shortcode}:`,
-              `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
-        status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
-        content = element.reblog.content;
-      }
-      if (element.reblog === null) {
-        content = element.content;
-        if (element.emojis.length > 0) {
-          element.emojis.forEach((pc_emoji) => {
-            content = content.replaceAll(
-              `:${pc_emoji.shortcode}:`,
-              `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
+  try {
+    let statuses = [];
+    data.forEach((element) => {
+      let status = "";
+      if (ispost) {
+        status = '<div class="card bg-darker status" id="post">';
       } else {
-        if (element.reblog.emojis.length > 0) {
-          element.reblog.emojis.forEach((rpc_emoji) => {
-            content = content.replaceAll(
-              `:${rpc_emoji.shortcode}:`,
-              `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
+        status = '<div class="card status">';
       }
-      content = content.replaceAll('<a href="', '<a target="_blank" href="');
-      status += `
-            <p style="margin-top:15px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
-                <i>${element.spoiler_text}</i> (click to open)
-            </a>
-            <div class="collapse" class="status-content" id="status-${element.id}">
-                ${content}
-            </div></p>`;
-    } else {
-      let content = "";
-      if (element.reblog !== null) {
-        let reblog_display_name = element.reblog.account.display_name;
-        if (element.reblog.account.emojis.length > 0) {
-          element.reblog.account.emojis.forEach((rdp_emoji) => {
-            reblog_display_name = reblog_display_name.replaceAll(
-              `:${rdp_emoji.shortcode}:`,
-              `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
-        status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
-        content = element.reblog.content;
+      status += '<div style="margin-right:4px;margin-top:20px;">';
+      status += `<a href="/user?id=${element.account.id}" style="float:right;"><img src="${element.account.avatar}" class="avatar" width="64" height="64" alt="${element.account.display_name}'s Avatar"></a>`;
+      let display_name = element.account.display_name;
+      if (element.account.emojis.length > 0) {
+        element.account.emojis.forEach((dp_emoji) => {
+          display_name = display_name.replaceAll(
+            `:${dp_emoji.shortcode}:`,
+            `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`
+          );
+        });
       }
+      status += `<h4 class="display-name" id="dp-${element.account.id}" style="margin-top: 20px;">${display_name}</h4></div>`;
       if (element.reblog === null) {
-        content = element.content;
-        if (element.emojis.length > 0) {
-          element.emojis.forEach((pc_emoji) => {
-            content = content.replaceAll(
-              `:${pc_emoji.shortcode}:`,
-              `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
-      } else {
-        if (element.reblog.emojis.length > 0) {
-          element.reblog.emojis.forEach((rpc_emoji) => {
-            content = content.replaceAll(
-              `:${rpc_emoji.shortcode}:`,
-              `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`
-            );
-          });
-        }
+        status += "<br>";
       }
-      content = content.replaceAll('<a href="', '<a target="_blank" href="');
-      if (content !== "") {
-        status += `${content}`;
-      }
-    }
-    if (element.media_attachments.length > 0) {
-      let decoded = decode(element.media_attachments[0].blurhash, 1, 1);
-      status += `<style>#attachments-${element.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
-      status += `<div class="attachments" id="attachments-${element.media_attachments[0].id}">`;
-      element.media_attachments.forEach((attachment) => {
-        let alt =
-          attachment.description !== null
-            ? escapeHTML(attachment.description)
-            : "";
-        if (!element.sensitive) {
-          if (attachment.type === "image") {
-            status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
+      if (element.spoiler_text !== "") {
+        let content = "";
+        if (element.reblog !== null) {
+          let reblog_display_name = element.reblog.account.display_name;
+          if (element.reblog.account.emojis.length > 0) {
+            element.reblog.account.emojis.forEach((rdp_emoji) => {
+              reblog_display_name = reblog_display_name.replaceAll(
+                `:${rdp_emoji.shortcode}:`,
+                `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`
+              );
+            });
           }
-          if (attachment.type === "video") {
-            status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" preload controls></video> `;
-          }
-          if (attachment.type === "audio") {
-            status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" preload controls></audio> `;
-          }
-          if (attachment.type === "gifv") {
-            status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" autoplay muted loop></video> `;
+          status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+          content = element.reblog.content;
+        }
+        if (element.reblog === null) {
+          content = element.content;
+          if (element.emojis.length > 0) {
+            element.emojis.forEach((pc_emoji) => {
+              content = content.replaceAll(
+                `:${pc_emoji.shortcode}:`,
+                `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`
+              );
+            });
           }
         } else {
-          status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
+          if (element.reblog.emojis.length > 0) {
+            element.reblog.emojis.forEach((rpc_emoji) => {
+              content = content.replaceAll(
+                `:${rpc_emoji.shortcode}:`,
+                `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`
+              );
+            });
+          }
         }
-      });
-      status += "</div>";
-    }
-    if (element.reblog !== null) {
-      if (element.reblog.media_attachments.length > 0) {
-        let decoded = decode(
-          element.reblog.media_attachments[0].blurhash,
-          1,
-          1
-        );
-        status += `<style>#attachments-${element.reblog.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
-        status += `<div class="attachments" id="attachments-${element.reblog.media_attachments[0].id}">`;
-        element.reblog.media_attachments.forEach((attachment) => {
+        content = content.replaceAll('<a href="', '<a target="_blank" href="');
+        status += `
+              <p style="margin-top:15px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
+                  <i>${element.spoiler_text}</i> (click to open)
+              </a>
+              <div class="collapse" class="status-content" id="status-${element.id}">
+                  ${content}
+              </div></p>`;
+      } else {
+        let content = "";
+        if (element.reblog !== null) {
+          let reblog_display_name = element.reblog.account.display_name;
+          if (element.reblog.account.emojis.length > 0) {
+            element.reblog.account.emojis.forEach((rdp_emoji) => {
+              reblog_display_name = reblog_display_name.replaceAll(
+                `:${rdp_emoji.shortcode}:`,
+                `<img src="${rdp_emoji.url}" alt="Emoji ${rdp_emoji.shortcode}" class="emoji">`
+              );
+            });
+          }
+          status += `<br><p><b>${iconBoost} <a href="/user?id=${element.reblog.account.id}"><img src="${element.reblog.account.avatar}" class="avatar" width="16" height="16" alt="${element.reblog.display_name}'s Avatar"></a> Boosted ${reblog_display_name}</b></p><br>`;
+          content = element.reblog.content;
+        }
+        if (element.reblog === null) {
+          content = element.content;
+          if (element.emojis.length > 0) {
+            element.emojis.forEach((pc_emoji) => {
+              content = content.replaceAll(
+                `:${pc_emoji.shortcode}:`,
+                `<img src="${pc_emoji.url}" alt="Emoji ${pc_emoji.shortcode}" class="emoji">`
+              );
+            });
+          }
+        } else {
+          if (element.reblog.emojis.length > 0) {
+            element.reblog.emojis.forEach((rpc_emoji) => {
+              content = content.replaceAll(
+                `:${rpc_emoji.shortcode}:`,
+                `<img src="${rpc_emoji.url}" alt="Emoji ${rpc_emoji.shortcode}" class="emoji">`
+              );
+            });
+          }
+        }
+        content = content.replaceAll('<a href="', '<a target="_blank" href="');
+        if (content !== "") {
+          status += `${content}`;
+        }
+      }
+      if (element.media_attachments.length > 0) {
+        let decoded = decode(element.media_attachments[0].blurhash, 1, 1);
+        status += `<style>#attachments-${element.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
+        status += `<div class="attachments" id="attachments-${element.media_attachments[0].id}">`;
+        element.media_attachments.forEach((attachment) => {
           let alt =
             attachment.description !== null
               ? escapeHTML(attachment.description)
               : "";
           if (!element.sensitive) {
-            let alt =
-              attachment.description !== null
-                ? escapeHTML(attachment.description)
-                : "";
             if (attachment.type === "image") {
               status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
             }
             if (attachment.type === "video") {
-              status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" controls></video> `;
+              status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" preload controls></video> `;
             }
             if (attachment.type === "audio") {
-              status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" controls></audio> `;
+              status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" preload controls></audio> `;
             }
             if (attachment.type === "gifv") {
               status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" autoplay muted loop></video> `;
@@ -216,69 +180,109 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
         });
         status += "</div>";
       }
-    }
-    const acct = localStorage.getItem("acct");
-    let actions = "";
-    if (element.account.acct === acct) {
-      actions += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
-    }
-    if (threadmode) {
-      if (!element.reblog) {
-        if (!element.favourited) {
-          actions += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav} ${element.favourites_count}</a> `;
-        } else {
-          actions += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav} ${element.favourites_count}</a> `;
+      if (element.reblog !== null) {
+        if (element.reblog.media_attachments.length > 0) {
+          let decoded = decode(
+            element.reblog.media_attachments[0].blurhash,
+            1,
+            1
+          );
+          status += `<style>#attachments-${element.reblog.media_attachments[0].id} { background: rgb(${decoded[0]}, ${decoded[1]}, ${decoded[2]}) !important; }</style>`;
+          status += `<div class="attachments" id="attachments-${element.reblog.media_attachments[0].id}">`;
+          element.reblog.media_attachments.forEach((attachment) => {
+            let alt =
+              attachment.description !== null
+                ? escapeHTML(attachment.description)
+                : "";
+            if (!element.sensitive) {
+              let alt =
+                attachment.description !== null
+                  ? escapeHTML(attachment.description)
+                  : "";
+              if (attachment.type === "image") {
+                status += `<a href="${attachment.url}" target="_blank"><img src="${attachment.preview_url}" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
+              }
+              if (attachment.type === "video") {
+                status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" controls></video> `;
+              }
+              if (attachment.type === "audio") {
+                status += `<audio src=${attachment.url} alt="${alt}" title="${alt}" class="attachment" controls></audio> `;
+              }
+              if (attachment.type === "gifv") {
+                status += `<video src=${attachment.url} width="300" alt="${alt}" title="${alt}" class="attachment" autoplay muted loop></video> `;
+              }
+            } else {
+              status += `<a href="${attachment.url}" target="_blank"><img src="/nsfw.png" class="attachment" width="300" alt="${alt}" title="${alt}"></a> `;
+            }
+          });
+          status += "</div>";
         }
-        if (!element.reblogged) {
-          actions += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost} ${element.reblogs_count}</a> `;
-        } else {
-          actions += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
-        }
-        actions += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
-      } else {
-        if (!element.reblog.favourited) {
-          actions += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
-        } else {
-          actions += `<a href="/action/unfav?id=${element.reblog.id}" class="btn btn-warning">${iconUnfav}</a> `;
-        }
-        if (!element.reblog.reblogged) {
-          actions += `<a href="/action/boost?id=${element.reblog.id}" class="btn btn-secondary">${iconBoost}</a> `;
-        } else {
-          actions += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
-        }
-        actions += `<a href="/action/reply?id=${element.reblog.id}" class="btn btn-secondary">${iconReply}</a> `;
       }
-    }
-    let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
-    if (threadmode || element.account.acct === acct) {
-      status += `<hr><p class="actions">${actions}</p>`;
-    } else {
-      status += "<hr>";
-    }
-    if (element.reblog === null) {
-      status += `<p><a href="/thread?id=${
-        element.id
-      }">${statusdate}</a> | ${capitalizeFirstLetter(
-        element.visibility
-      )} | <a href="javascript:navigator.clipboard.writeText('${
-        element.url
-      }')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
-    } else {
-      status += `<p><a href="/thread?id=${
-        element.reblog.id
-      }">${statusdate}</a> | ${capitalizeFirstLetter(
-        element.visibility
-      )} | <a href="javascript:navigator.clipboard.writeText('${
-        element.reblog.url
-      }')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
-    }
-    status += "</div>";
-    localStorage.setItem("last-element", element.id);
-    statuses.push(status);
-  });
-  let html = "";
-  statuses.forEach((se) => {
-    html += se;
-  });
-  return html;
+      const acct = localStorage.getItem("acct");
+      let actions = "";
+      if (element.account.acct === acct) {
+        actions += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
+      }
+      if (threadmode) {
+        if (!element.reblog) {
+          if (!element.favourited) {
+            actions += `<a href="/action/fav?id=${element.id}" class="btn btn-warning">${iconFav} ${element.favourites_count}</a> `;
+          } else {
+            actions += `<a href="/action/unfav?id=${element.id}" class="btn btn-warning">${iconUnfav} ${element.favourites_count}</a> `;
+          }
+          if (!element.reblogged) {
+            actions += `<a href="/action/boost?id=${element.id}" class="btn btn-secondary">${iconBoost} ${element.reblogs_count}</a> `;
+          } else {
+            actions += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
+          }
+          actions += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
+        } else {
+          if (!element.reblog.favourited) {
+            actions += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
+          } else {
+            actions += `<a href="/action/unfav?id=${element.reblog.id}" class="btn btn-warning">${iconUnfav}</a> `;
+          }
+          if (!element.reblog.reblogged) {
+            actions += `<a href="/action/boost?id=${element.reblog.id}" class="btn btn-secondary">${iconBoost}</a> `;
+          } else {
+            actions += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
+          }
+          actions += `<a href="/action/reply?id=${element.reblog.id}" class="btn btn-secondary">${iconReply}</a> `;
+        }
+      }
+      let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();
+      if (threadmode || element.account.acct === acct) {
+        status += `<hr><p class="actions">${actions}</p>`;
+      } else {
+        status += "<hr>";
+      }
+      if (element.reblog === null) {
+        status += `<p><a href="/thread?id=${
+          element.id
+        }">${statusdate}</a> | ${capitalizeFirstLetter(
+          element.visibility
+        )} | <a href="javascript:navigator.clipboard.writeText('${
+          element.url
+        }')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
+      } else {
+        status += `<p><a href="/thread?id=${
+          element.reblog.id
+        }">${statusdate}</a> | ${capitalizeFirstLetter(
+          element.visibility
+        )} | <a href="javascript:navigator.clipboard.writeText('${
+          element.reblog.url
+        }')" class="text-white" style="text-decoration:none;">${iconCopy} Copy link</a></p>`;
+      }
+      status += "</div>";
+      localStorage.setItem("last-element", element.id);
+      statuses.push(status);
+    });
+    let html = "";
+    statuses.forEach((se) => {
+      html += se;
+    });
+    return html;
+  } catch (e) {
+    return "";
+  }
 }

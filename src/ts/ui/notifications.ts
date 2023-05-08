@@ -24,16 +24,24 @@ export function renderNotifications(data) {
                 notifications += `<li>${iconFollow} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} followed you</li>`;
                 break;
             case "favourite":
-                notifications += `<li>${iconFav} <a href="/user?id=${element.account.id}">${display_name}</a> favourited your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                if (renderTimeline([element.status], true, false) !== "") {
+                    notifications += `<li>${iconFav} <a href="/user?id=${element.account.id}">${display_name}</a> favourited your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                }
                 break;
             case "reblog":
-                notifications += `<li>${iconBoost} <a href="/user?id=${element.account.id}">${display_name}</a> boosted your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                if (renderTimeline([element.status], true, false) !== "") {
+                    notifications += `<li>${iconBoost} <a href="/user?id=${element.account.id}">${display_name}</a> boosted your post:<br>${renderTimeline([element.status], true, false)}</li>`;
+                }
                 break;
             case "mention":
-                notifications += `<li>@ ${display_name} mentioned you:<br>${renderTimeline([element.status], true, false)}</li>`;
+                if (renderTimeline([element.status], true, false) !== "") {
+                    notifications += `<li>@ ${display_name} mentioned you:<br>${renderTimeline([element.status], true, false)}</li>`;
+                }
                 break;
             case "poll":
-                notifications += `<li>${display_name.split(" ")[0]}'s poll finished:<br>${renderTimeline([element.status], true, false)}</li>`;
+                if (renderTimeline([element.status], true, false) !== "") {
+                    notifications += `<li>${display_name.split(" ")[0]}'s poll finished:<br>${renderTimeline([element.status], true, false)}</li>`;
+                }
                 break;
             case "follow_request":
                 notifications += `<li>${iconFollow} <a href="/follow_requests?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} wants to follow you</li>`;
@@ -45,10 +53,14 @@ export function renderNotifications(data) {
                 notifications += `<li>${iconMessage} <a href="/user?id=${element.account.id}"><img src="${element.account.avatar}" class="avatar" width="16" height="16" alt="${element.account.display_name}'s Avatar"></a> ${display_name} opened a new report<br><br><a href="https://${localStorage.getItem("instance")}/admin/reports/${element.report.id}" target="_blank">#${element.report.id}</a><br><i>"${element.report.comment}"</i></li>`;
                 break;
             case "update":
-                notifications += `<li>${iconBoost} The post you boosted was updated<br>${renderTimeline([element.status])}</li>`
+                if (renderTimeline([element.status]) !== "") {
+                    notifications += `<li>${iconBoost} The post you boosted was updated<br>${renderTimeline([element.status])}</li>`
+                }
                 break;
             case "status":
-                notifications += `<li>${renderTimeline([element.status])}</li>`;
+                if (renderTimeline([element.status]) !== "") {
+                    notifications += `<li>${renderTimeline([element.status])}</li>`;
+                }
                 break;
             default:
                 notifications += "<li>Unkown notification type " + element.type + "</li>";
