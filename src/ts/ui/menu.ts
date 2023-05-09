@@ -17,3 +17,12 @@ api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", tru
         $("#nav-follow_requests").hide();
     }
 });
+
+function loadNotificationLength() {
+    api(localStorage.getItem("instance"), "/api/v1/notifications", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+        $("#nav-notifications").html("Notifications ("+data.length+")");
+    });
+}
+loadNotificationLength();
+
+window.setInterval(loadNotificationLength, 5000);
