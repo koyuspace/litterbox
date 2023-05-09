@@ -16,7 +16,11 @@ api(instance, "/api/v1/accounts/verify_credentials", true, "GET", {}, localStora
 export function initializePlaceholders() {
     window.setInterval(() => {
         $(".username").html(username);
-        $(".edit-profile").attr("href", `https://${instance}/settings/profile`);
+        let protocol = "https://";
+        if (instance.startsWith("localhost")) {
+            protocol = "http://";
+        }
+        $(".edit-profile").attr("href", `${protocol}${instance}/settings/profile`);
     });
 }
 

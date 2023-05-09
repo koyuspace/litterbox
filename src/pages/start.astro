@@ -1,29 +1,40 @@
 ---
 import Layout from "../layouts/landing.astro";
+var instance = Astro.url.href.split("/")[2].split("/")[0].replace("web.", "");
+if (instance === "localhost:3000") {
+    instance = "localhost:8080";
+}
 ---
 
 <Layout>
     <div class="jumbotron">
         <img src="/logo.png" height="220" class="logo">
-        <h1 class="display-4 lead">Welcome to cutebox!</h1>
-        <p class="lead">The simple social networking server for the Fediverse. Click the login button to use it.</p>
+        <h1 class="display-4 lead">Welcome to <span class="name">cutebox</span>!</h1>
+        <p class="lead description">The simple social networking server for the Fediverse. Click the login button to use it.</p>
         <hr class="my-4">
         <p class="lead">
             <form action="/login" method="GET">
-                <input type="hidden" value="cutebox.cc" class="form-control" name="instance" placeholder="yourinstance.tld">
+                <input type="hidden" value={instance} class="form-control" name="instance" placeholder="yourinstance.tld">
                 <input type="submit" class="btn btn-lg btn-primary" id="login" role="button" value="Log in">
             </form>
         </p>
         <br>
         <p class="lead">Need an account? <a href="/request">Request one now!</a></p>
+        <br><hr>
+        <p>Powered by <a href="https://cutebox.cc" target="_blank" nofollow>cutebox</a> | <a href="/privacy">Privacy</a></p>
     </div>
 </Layout>
 
 <script>
+    import { api } from "../ts/api/request";
     import { checkForLogin } from "../ts/auth/check";
     import { checkInstance } from "../ts/workers/landing";
     import $ from "jquery";
     checkForLogin();
+    var instance = location.href.split("/")[2].split("/")[0].replace("web.", "");
+    if (instance === "localhost:3000") {
+        instance = "localhost:8080";
+    }
     $(document).ready(() => {
         if (checkInstance() !== "" && localStorage.getItem("token") === null) {
             $("input[name=\"instance\"]").val(checkInstance());
@@ -31,6 +42,12 @@ import Layout from "../layouts/landing.astro";
                 $("form").submit();
             }, 20);
         }
+        api(instance, "/api/v1/instance").then((data) => {
+            $(".logo").attr("src", data.thumbnail);
+            $(".name").text(data.title);
+            document.title = data.title;
+            $(".description").text(data.description);
+        });
     });
 </script>
 
