@@ -63,7 +63,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
         element.account.emojis.forEach((dp_emoji) => {
           display_name = display_name.replaceAll(
             `:${dp_emoji.shortcode}:`,
-            `<img src="${dp_emoji.url}" alt=":${dp_emoji.shortcode}:" class="emoji">`
+            `<img src="${dp_emoji.url}" alt=":${dp_emoji.shortcode}:" title=":${dp_emoji.shortcode}:" class="emoji">`
           );
         });
       }
@@ -79,7 +79,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.reblog.account.emojis.forEach((rdp_emoji) => {
               reblog_display_name = reblog_display_name.replaceAll(
                 `:${rdp_emoji.shortcode}:`,
-                `<img src="${rdp_emoji.url}" alt=":${rdp_emoji.shortcode}:" class="emoji">`
+                `<img src="${rdp_emoji.url}" alt=":${rdp_emoji.shortcode}:" title=":${rdp_emoji.shortcode}:" class="emoji">`
               );
             });
           }
@@ -92,7 +92,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.emojis.forEach((pc_emoji) => {
               content = content.replaceAll(
                 `:${pc_emoji.shortcode}:`,
-                `<img src="${pc_emoji.url}" alt=":${pc_emoji.shortcode}:" class="emoji">`
+                `<img src="${pc_emoji.url}" alt=":${pc_emoji.shortcode}:" title=":${pc_emoji.shortcode}:" class="emoji">`
               );
             });
           }
@@ -101,7 +101,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.reblog.emojis.forEach((rpc_emoji) => {
               content = content.replaceAll(
                 `:${rpc_emoji.shortcode}:`,
-                `<img src="${rpc_emoji.url}" alt=":${rpc_emoji.shortcode}:" class="emoji">`
+                `<img src="${rpc_emoji.url}" alt=":${rpc_emoji.shortcode}:" title=":${rpc_emoji.shortcode}:" class="emoji">`
               );
             });
           }
@@ -122,7 +122,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.reblog.account.emojis.forEach((rdp_emoji) => {
               reblog_display_name = reblog_display_name.replaceAll(
                 `:${rdp_emoji.shortcode}:`,
-                `<img src="${rdp_emoji.url}" alt=":${rdp_emoji.shortcode}:" class="emoji">`
+                `<img src="${rdp_emoji.url}" alt=":${rdp_emoji.shortcode}:" title=":${rdp_emoji.shortcode}:" class="emoji">`
               );
             });
           }
@@ -135,7 +135,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.emojis.forEach((pc_emoji) => {
               content = content.replaceAll(
                 `:${pc_emoji.shortcode}:`,
-                `<img src="${pc_emoji.url}" alt=":${pc_emoji.shortcode}:" class="emoji">`
+                `<img src="${pc_emoji.url}" alt=":${pc_emoji.shortcode}:" title=":${pc_emoji.shortcode}:" class="emoji">`
               );
             });
           }
@@ -144,7 +144,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             element.reblog.emojis.forEach((rpc_emoji) => {
               content = content.replaceAll(
                 `:${rpc_emoji.shortcode}:`,
-                `<img src="${rpc_emoji.url}" alt=":${rpc_emoji.shortcode}:" class="emoji">`
+                `<img src="${rpc_emoji.url}" alt=":${rpc_emoji.shortcode}:" title=":${rpc_emoji.shortcode}:" class="emoji">`
               );
             });
           }
