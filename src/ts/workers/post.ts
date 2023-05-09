@@ -1,11 +1,20 @@
 import $ from "jquery";
 import { api } from "../api/request";
 import{ renderTimeline } from "../ui/timeline";
-import { goBack } from "./back";
 
 let uploads = [];
 
 export function loadPostForm() {
+    try {
+        if (localStorage.getItem("content") !== null && localStorage.getItem("content") !== "") {
+            $("#post-form").val(localStorage.getItem("content"));
+            window.setInterval(() => {
+                localStorage.setItem("content", "");
+            }, 1000);
+        }
+    } catch (e) {
+        localStorage.setItem("content", "");
+    }
     const id = location.href.split("?id=")[1];
     if (id === undefined) {
         api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
@@ -68,6 +77,7 @@ export function post() {
             "sensitive": $("#spoiler").val() !== ""
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
+            localStorage.setItem("content", "");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
             }, 100);
@@ -87,6 +97,7 @@ export function post() {
             "sensitive": $("#spoiler").val() !== ""
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
+            localStorage.setItem("content", "");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
             }, 100);
