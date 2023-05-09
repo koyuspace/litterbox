@@ -1,3 +1,7 @@
+---
+import Icon from "astro-icon";
+---
+
 <input type="text" class="form-control" id="spoiler" placeholder="Content warning"><br>
 <textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?"></textarea><br>
 
@@ -20,4 +24,17 @@
     <input type="submit" id="post" value="Post" class="btn btn-primary">
 </div>
 
+<a href="/emoji"><Icon id="emoji-picker" name="ph:smiley" /></a>
+
 <script src="../../ts/ui/statusbox.ts"></script>
+
+<style is:inline>
+    #emoji-picker {
+        width: 2em;
+        height: 2em;
+        display: block;
+        float: right;
+        margin: 10px;
+        margin-top: 3px;
+    }
+</style>

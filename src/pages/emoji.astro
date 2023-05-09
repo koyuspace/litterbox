@@ -1,0 +1,25 @@
+---
+import Layout from "../layouts/default.astro";
+---
+
+<Layout>
+    <div class="center2">
+        <h1>Custom Emoji</h1>
+        <a href="#" id="back">&larr; Back</a>
+        <div id="emoji">Loading...</div>
+    </div>
+    <script src="../ts/ui/emoji.ts"></script>
+    <script>
+        import $ from "jquery";
+        $("#back").click((e) => {
+            history.back();
+            e.preventDefault();
+        });
+    </script>
+    <style is:inline>
+        .emoji {
+            margin: 10px;
+            cursor: pointer;
+        }
+    </style>
+</Layout>
