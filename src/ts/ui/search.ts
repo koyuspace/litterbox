@@ -23,7 +23,7 @@ export function loadSearch(query) {
           account.emojis.forEach((dp_emoji) => {
             display_name = display_name.replaceAll(
               `:${dp_emoji.shortcode}:`,
-              `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`
+              `<img src="${dp_emoji.url}" alt=":${dp_emoji.shortcode}:" class="emoji">`
             );
           });
         }
