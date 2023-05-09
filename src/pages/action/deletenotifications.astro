@@ -7,9 +7,9 @@ import Layout from "../../layouts/redirect.astro";
         import { api } from "../../ts/api/request";
         api(localStorage.getItem("instance"), "/api/v1/notifications/clear", true, "POST", {}, localStorage.getItem("token")).then(() => {
             if (document.referrer.includes("?")) {
-                location.href = document.referrer+"&reload=true";
+                location.replace(document.referrer+"&reload=true");
             } else {
-                location.href = document.referrer+"?reload=true";
+                location.replace(document.referrer+"?reload=true");
             }
         });
     </script>

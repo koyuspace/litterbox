@@ -3,7 +3,7 @@ import Icon from "astro-icon";
 ---
 
 <input type="text" class="form-control" id="spoiler" placeholder="Content warning"><br>
-<textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?"></textarea><br>
+<textarea class="form-control" id="post-form" rows="8" cols="10" placeholder="What's happening?" autofocus></textarea><br>
 
 <div id="media_attachments"></div>
 
@@ -36,5 +36,8 @@ import Icon from "astro-icon";
         float: right;
         margin: 10px;
         margin-top: 3px;
+    }
+    .attachment {
+        cursor: not-allowed;
     }
 </style>
