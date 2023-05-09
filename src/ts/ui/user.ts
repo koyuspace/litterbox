@@ -36,7 +36,7 @@ export function loadUser(id) {
                 try {
                     if (cd[0].emojis.length > 0) {
                         cd[0].emojis.forEach(dp_emoji => {
-                            display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
+                            display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt=":${dp_emoji.shortcode}:" class="emoji">`);
                         });
                     }
                 } catch (e) {}
@@ -83,7 +83,7 @@ export function loadUser(id) {
                     lock = iconLock;
                 }
                 if (!cd[1].blocking) {
-                    html += `<br><br><h4><img src="${cd[0].avatar}" class="avatar" width="48" height="48" alt="${cd[0].display_name}'s Avatar"> ${display_name}</h4><br>`;
+                    html += `<br><br><h4><a href="${cd[0].avatar}" target="_blank"><img src="${cd[0].avatar}" class="avatar" width="48" height="48" alt="${cd[0].display_name}'s Avatar"></a> ${display_name}</h4><br>`;
                 } else {
                     html += `<h1>${display_name}</h1>`;
                 }
@@ -101,7 +101,7 @@ export function loadUser(id) {
                     let bio = cd[0].note;
                     if (cd[0].emojis.length > 0) {
                         cd[0].emojis.forEach(bio_emoji => {
-                            bio = bio.replaceAll(`:${bio_emoji.shortcode}:`, `<img src="${bio_emoji.url}" alt="Emoji ${bio_emoji.shortcode}" class="emoji">`);
+                            bio = bio.replaceAll(`:${bio_emoji.shortcode}:`, `<img src="${bio_emoji.url}" alt=":${bio_emoji.shortcode}:" class="emoji">`);
                         });
                     }
                     if (cd[0].note !== "") {

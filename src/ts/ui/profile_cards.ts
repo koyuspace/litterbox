@@ -7,7 +7,7 @@ export function renderProfileCards(data) {
         let display_name = element.display_name;
         if (element.emojis.length > 0) {
             element.emojis.forEach(dp_emoji => {
-                display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt="Emoji ${dp_emoji.shortcode}" class="emoji">`);
+                display_name = display_name.replaceAll(`:${dp_emoji.shortcode}:`, `<img src="${dp_emoji.url}" alt=":${dp_emoji.shortcode}:" class="emoji">`);
             });
         }
         html += `<style>#pc-${element.id} { background: linear-gradient(rgba(0,0,0,.75), rgba(0,0,0,.75)), url('${element.header}') center center no-repeat; background-size: cover; }</style>`;
