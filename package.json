@@ -11,7 +11,8 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^2.4.3",
+    "@astrojs/netlify": "^2.2.2",
+    "astro": "^2.2.1",
     "astro-icon": "^0.8.0",
     "blurhash": "^2.0.5",
     "bootstrap": "^5.2.3",
