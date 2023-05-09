@@ -15,7 +15,8 @@
 #blockbutton,
 #notifybutton,
 #makeunfollowbutton,
-#nfollowbutton {
+#nfollowbutton,
+#mentionbutton {
   color: #fff;
   float: right;
 }
@@ -25,7 +26,8 @@
 #blockbutton .icon,
 #notifybutton .icon,
 #makeunfollowbutton .icon,
-#nfollowbutton .icon {
+#nfollowbutton .icon,
+#mentionbutton .icon {
   height: 32px;
   margin-left: 16px;
 }

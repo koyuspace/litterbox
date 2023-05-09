@@ -6,8 +6,8 @@ import Layout from "../../layouts/redirect.astro";
     <script>
         import { api } from "../../ts/api/request";
         const id = location.href.split("?id=")[1];
-        api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "DELETE", {}, localStorage.getItem("token")).then((data) => {
-            localStorage.setItem("content" , data.text);
+        api(localStorage.getItem("instance"), `/api/v1/accounts/${id}`, true, "GET").then((data) => {
+            localStorage.setItem("content", `@${data.acct} `);
             location.replace("/action/post");
         });
     </script>

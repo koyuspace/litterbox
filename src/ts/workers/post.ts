@@ -110,11 +110,27 @@ export function upload() {
     var file_data = input.files[0];
     let form_data = new FormData();
     form_data.append("file", file_data);
+    $("#file").attr("disabled", "");
+    $("#upload").attr("disabled", "");
     api(localStorage.getItem("instance"), "/api/v1/media", true, "POST", form_data, localStorage.getItem("token"), true).then((data) => {
+        const attachment = data;
         uploads.push(data.id);
         localStorage.setItem("uploads", JSON.stringify(uploads));
         $("#file").val("");
-        $("#media_attachments").append(`<img src="${data.url}" class="file" id="file-${data.id}" height="90">`);
+        if (attachment.type === "image") {
+            $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+        }
+        if (attachment.type === "video") {
+            $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" preload controls></video> `);
+        }
+        if (attachment.type === "audio") {
+            $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
+        }
+        if (attachment.type === "gifv") {
+            $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" autoplay muted loop></video> `);
+        }
+        $("#file").removeAttr("disabled");
+        $("#upload").removeAttr("disabled");
         $(`#file-${data.id}`).click(() => {
             const id = $(`#file-${data.id}`).attr("id").replace("file-", "");
             let tmp = [];
