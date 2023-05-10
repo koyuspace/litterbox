@@ -7,7 +7,12 @@ import Layout from "../../layouts/redirect.astro";
         import { api } from "../../ts/api/request";
         const id = location.href.split("?id=")[1];
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "DELETE", {}, localStorage.getItem("token")).then((data) => {
-            localStorage.setItem("content" , data.text);
+            if (data.text) {
+                localStorage.setItem("content" , data.text);
+            }
+            if (data.media_ids) {
+                localStorage.setItem("media_ids", data.media_ids);
+            }
             if (data.in_reply_to_id) {
                 location.replace(`/action/post?id=${data.in_reply_to_id}`);
             } else {
