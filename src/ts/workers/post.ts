@@ -24,10 +24,10 @@ export function loadPostForm() {
             api(localStorage.getItem("instance"), `/api/v1/media/${e}`, true, "GET", {}, localStorage.getItem("token"), true).then((data) => {
                 const attachment = data;
                 if (attachment.type === "image") {
-                    $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+                    $("#media_attachments").append(`<img src="${attachment.url}" id="file-${data.id}" class="attachment" width="300"> `);
                 }
                 if (attachment.type === "video") {
-                    $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" preload controls></video> `);
+                    $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
                 }
                 if (attachment.type === "audio") {
                     $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
@@ -155,10 +155,10 @@ export function upload() {
         localStorage.setItem("uploads", JSON.stringify(uploads));
         $("#file").val("");
         if (attachment.type === "image") {
-            $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+            $("#media_attachments").append(`<img src="${attachment.url}" id="file-${data.id}" class="attachment" width="300"> `);
         }
         if (attachment.type === "video") {
-            $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" preload controls></video> `);
+            $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
         }
         if (attachment.type === "audio") {
             $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
