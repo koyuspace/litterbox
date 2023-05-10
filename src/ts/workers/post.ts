@@ -16,11 +16,10 @@ export function loadPostForm() {
         localStorage.setItem("content", "");
     }
     const id = location.href.split("?id=")[1];
-    localStorage.setItem("media_ids", localStorage.getItem("uploads"));
     if (localStorage.getItem("media_ids") !== "[]" && localStorage.getItem("media_ids") !== null) {
         uploads = JSON.parse(localStorage.getItem("media_ids"));
         localStorage.setItem("uploads", JSON.stringify(uploads));
-        JSON.parse(localStorage.getItem("uploads")).forEach((e) => {
+        JSON.parse(localStorage.getItem("media_ids")).forEach((e) => {
             api(localStorage.getItem("instance"), `/api/v1/media/${e}`, true, "GET", {}, localStorage.getItem("token"), true).then((data) => {
                 const attachment = data;
                 if (attachment.type === "image") {
