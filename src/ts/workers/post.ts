@@ -19,7 +19,8 @@ export function loadPostForm() {
     if (localStorage.getItem("media_ids") !== "[]" && localStorage.getItem("media_ids") !== null) {
         uploads = JSON.parse(localStorage.getItem("media_ids"));
         localStorage.setItem("uploads", JSON.stringify(uploads));
-        JSON.parse(localStorage.getItem("media_ids")).forEach((e) => {
+        localStorage.setItem("media_ids", "[]");
+        uploads.forEach((e) => {
             api(localStorage.getItem("instance"), `/api/v1/media/${e}`, true, "GET", {}, localStorage.getItem("token"), true).then((data) => {
                 const attachment = data;
                 if (attachment.type === "image") {
@@ -71,7 +72,6 @@ export function loadPostForm() {
             $("#context").html(renderTimeline([data]));
         });
     }
-    localStorage.setItem("media_ids", "[]");
 }
 
 export function post() {
