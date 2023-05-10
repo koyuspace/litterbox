@@ -10,8 +10,12 @@ import Layout from "../../layouts/redirect.astro";
             if (data.text) {
                 localStorage.setItem("content" , data.text);
             }
-            if (data.media_ids) {
-                localStorage.setItem("media_ids", data.media_ids);
+            if (data.media_attachments) {
+                let media_ids = [];
+                data.media_attachments.forEach(attachment => {
+                    media_ids.push(attachment.id);
+                });
+                localStorage.setItem("media_ids", JSON.stringify(media_ids));
             }
             if (data.in_reply_to_id) {
                 location.replace(`/action/post?id=${data.in_reply_to_id}`);
