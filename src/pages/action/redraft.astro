@@ -8,7 +8,11 @@ import Layout from "../../layouts/redirect.astro";
         const id = location.href.split("?id=")[1];
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "DELETE", {}, localStorage.getItem("token")).then((data) => {
             localStorage.setItem("content" , data.text);
-            location.replace("/action/post");
+            if (data.in_reply_to_id) {
+                location.replace(`/action/post?id=${data.in_reply_to_id}`);
+            } else {
+                location.replace("/action/post");
+            }
         });
     </script>
 </Layout>
