@@ -223,7 +223,9 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
       const acct = localStorage.getItem("acct");
       let actions = "";
       if (element.account.acct === acct) {
-        actions += `<a href="/action/redraft?id=${element.id}" class="btn btn-primary">${iconPencil}</a> `;
+        if (!element.reblog) {
+          actions += `<a href="/action/redraft?id=${element.id}" class="btn btn-primary">${iconPencil}</a> `;
+        }
         actions += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
       }
       if (threadmode) {
