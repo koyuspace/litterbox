@@ -117,7 +117,7 @@ export function post() {
             localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
-            }, 100);
+            }, 500);
         });
     }).catch(() => {
         let id = location.href.split("?id=")[1];
@@ -135,9 +135,11 @@ export function post() {
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
             localStorage.setItem("content", "");
+            localStorage.setItem("media_ids", "[]");
+            localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
-            }, 100);
+            }, 500);
         });
     });
 }
