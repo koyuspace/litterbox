@@ -68,9 +68,11 @@ export function loadPostForm() {
         });
     }
     if (id === undefined) {
-        api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
-            $(`#${data.source.privacy}`).attr("selected", "");
-        });
+        if (localStorage.getItem("visibility") === null || localStorage.getItem("visibility") === "") {
+            api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+                $(`#${data.source.privacy}`).attr("selected", "");
+            });
+        }
     }
     if (id !== undefined) {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
