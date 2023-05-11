@@ -1,9 +1,5 @@
 ---
 import Layout from "../layouts/landing.astro";
-var instance = Astro.url.href.split("/")[2].split("/")[0].replace("web.", "");
-if (instance === "localhost:3000") {
-    instance = "localhost:8080";
-}
 ---
 
 <Layout>
@@ -14,7 +10,7 @@ if (instance === "localhost:3000") {
         <hr class="my-4">
         <p class="lead">
             <form action="/login" method="GET">
-                <input type="hidden" value={instance} class="form-control" name="instance" placeholder="yourinstance.tld">
+                <input type="hidden" value="" class="form-control" id="instance" name="instance" placeholder="yourinstance.tld">
                 <input type="submit" class="btn btn-lg btn-primary" id="login" role="button" value="Log in">
             </form>
         </p>
@@ -48,6 +44,11 @@ if (instance === "localhost:3000") {
             document.title = data.title;
             $(".description").text(data.description);
         });
+        const instance = location.href.split("/")[2].split("/")[0].replace("web.", "");
+        $("#instance").val(instance);
+        if (instance === "localhost:3000") {
+            $("#instance").val("localhost:8080");
+        }
     });
 </script>
 
