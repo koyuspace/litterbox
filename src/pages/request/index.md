@@ -8,7 +8,7 @@ layout: ../../layouts/landing.astro
 
 <br>
 
-<form name="request" action="/request/success" method="POST" netlify>
+<form name="request" action="/request/success" method="POST" data-netlify="true">
 	<div class="form-group">
 		<label>Username:<br><input type="text" name="username" class="form-control" required></label>
 	</div>
