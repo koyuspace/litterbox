@@ -10,6 +10,12 @@ import Layout from "../../layouts/redirect.astro";
             if (data.text) {
                 localStorage.setItem("content" , data.text);
             }
+            if (data.visibility) {
+                localStorage.setItem("visibility", data.visibility);
+            }
+            if (data.spoiler_text && data.spoiler_text !== "") {
+                localStorage.setItem("spoiler_text", data.spoiler_text);
+            }
             if (data.media_attachments) {
                 let media_ids = [];
                 data.media_attachments.forEach(attachment => {

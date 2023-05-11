@@ -4,6 +4,20 @@ import{ renderTimeline } from "../ui/timeline";
 
 let uploads = [];
 
+// Sorry I couldn't come up with a better function name ~koyu
+function manageLocalStorageOnPostForm(id, storage) {
+    try {
+        if (localStorage.getItem(storage) !== null && localStorage.getItem(storage) !== "") {
+            $(`#${id}`).val(localStorage.getItem(storage));
+            window.setInterval(() => {
+                localStorage.setItem(storage, "");
+            }, 1000);
+        }
+    } catch (e) {
+        localStorage.setItem(storage, "");
+    }
+}
+
 export function loadPostForm() {
     try {
         if (localStorage.getItem("content") !== null && localStorage.getItem("content") !== "") {
@@ -15,6 +29,9 @@ export function loadPostForm() {
     } catch (e) {
         localStorage.setItem("content", "");
     }
+    manageLocalStorageOnPostForm("post-form", "content");
+    manageLocalStorageOnPostForm("spoiler", "spoiler_text");
+    manageLocalStorageOnPostForm("visibility", "visibility");
     const id = location.href.split("?id=")[1];
     if (localStorage.getItem("media_ids") !== "[]" && localStorage.getItem("media_ids") !== null) {
         uploads = JSON.parse(localStorage.getItem("media_ids"));
@@ -112,6 +129,7 @@ export function post() {
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
             localStorage.setItem("content", "");
+            localStorage.setItem("spoiler_text", "");
             localStorage.setItem("media_ids", "[]");
             localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
@@ -134,6 +152,7 @@ export function post() {
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
             localStorage.setItem("content", "");
+            localStorage.setItem("spoiler_text", "");
             localStorage.setItem("media_ids", "[]");
             localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
