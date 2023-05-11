@@ -22,7 +22,6 @@ function findHashtags(searchText) {
     st = st.replace(/<span>/g, "");
     st = st.replace(/<\/span>/g, "");
   }
-  console.log(st);
   var regexp = /\B\#\w\w+\b/g
   let result = st.match(regexp);
   if (result !== null) {
@@ -131,7 +130,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
         let emojis = JSON.parse(localStorage.getItem("custom_emojis"));
         findHashtags(content).forEach((hashtag) => {
           emojis.forEach((emoji) => {
-            if (emoji.shortcode === hashtag.replace("#", "")) {
+            if (emoji.shortcode === hashtag.replace("#", "").toLowerCase()) {
               content = content.replaceAll(`#<span>${hashtag.replace("#", "")}</span>`, `${hashtag} <img src="${emoji.url}" alt="${hashtag}" title="${hashtag}" style="margin-right:8px;" class="emoji">`);
             }
           });
@@ -182,7 +181,7 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
         let emojis = JSON.parse(localStorage.getItem("custom_emojis"));
         findHashtags(content).forEach((hashtag) => {
           emojis.forEach((emoji) => {
-            if (emoji.shortcode === hashtag.replace("#", "")) {
+            if (emoji.shortcode === hashtag.replace("#", "").toLowerCase()) {
               content = content.replaceAll(`#<span>${hashtag.replace("#", "")}</span>`, `${hashtag} <img src="${emoji.url}" alt="${hashtag}" title="${hashtag}" style="margin-right:8px;" class="emoji">`);
             }
           });
