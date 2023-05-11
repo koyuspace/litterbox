@@ -16,6 +16,40 @@ export function loadPostForm() {
         localStorage.setItem("content", "");
     }
     const id = location.href.split("?id=")[1];
+    if (localStorage.getItem("media_ids") !== "[]" && localStorage.getItem("media_ids") !== null) {
+        uploads = JSON.parse(localStorage.getItem("media_ids"));
+        localStorage.setItem("uploads", JSON.stringify(uploads));
+        localStorage.setItem("media_ids", "[]");
+        uploads.forEach((e) => {
+            api(localStorage.getItem("instance"), `/api/v1/media/${e}`, true, "GET", {}, localStorage.getItem("token"), true).then((data) => {
+                const attachment = data;
+                if (attachment.type === "image") {
+                    $("#media_attachments").append(`<img src="${attachment.url}" id="file-${data.id}" class="attachment" width="300"> `);
+                }
+                if (attachment.type === "video") {
+                    $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+                }
+                if (attachment.type === "audio") {
+                    $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
+                }
+                if (attachment.type === "gifv") {
+                    $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" autoplay muted loop></video> `);
+                }
+                $(`#file-${data.id}`).click(() => {
+                    const id = $(`#file-${data.id}`).attr("id").replace("file-", "");
+                    let tmp = [];
+                    uploads.forEach((e) => {
+                        if (e !== id) {
+                            tmp.push(e);
+                        }
+                    });
+                    uploads = tmp;
+                    localStorage.setItem("uploads", JSON.stringify(uploads));
+                    $(`#file-${data.id}`).hide();
+                });
+            });
+        });
+    }
     if (id === undefined) {
         api(localStorage.getItem("instance"), "/api/v1/accounts/verify_credentials", true, "GET", {}, localStorage.getItem("token")).then((data) => {
             $(`#${data.source.privacy}`).attr("selected", "");
@@ -25,12 +59,12 @@ export function loadPostForm() {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             if (data.reblog) {
                 $(`#${data.reblog.visibility}`).attr("selected", "");
-                if (data.reblog.account.id !== localStorage.getItem("userid")) {
+                if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
                     $("#post-form").val(`@${data.reblog.account.acct} `);
                 }
             } else {
                 $(`#${data.visibility}`).attr("selected", "");
-                if (data.account.id !== localStorage.getItem("userid")) {
+                if (data.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
                     $("#post-form").val(`@${data.account.acct} `);
                 }
             }
@@ -78,9 +112,11 @@ export function post() {
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
             localStorage.setItem("content", "");
+            localStorage.setItem("media_ids", "[]");
+            localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
-            }, 100);
+            }, 500);
         });
     }).catch(() => {
         let id = location.href.split("?id=")[1];
@@ -98,9 +134,11 @@ export function post() {
         }, localStorage.getItem("token")).then((data) => {
             $("#post-form").val("");
             localStorage.setItem("content", "");
+            localStorage.setItem("media_ids", "[]");
+            localStorage.setItem("uploads", "[]");
             window.setTimeout(() => {
                 location.href = `/thread?id=${data.id}`;
-            }, 100);
+            }, 500);
         });
     });
 }
@@ -118,10 +156,10 @@ export function upload() {
         localStorage.setItem("uploads", JSON.stringify(uploads));
         $("#file").val("");
         if (attachment.type === "image") {
-            $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+            $("#media_attachments").append(`<img src="${attachment.url}" id="file-${data.id}" class="attachment" width="300"> `);
         }
         if (attachment.type === "video") {
-            $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" preload controls></video> `);
+            $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
         }
         if (attachment.type === "audio") {
             $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
