@@ -38,16 +38,23 @@ import Layout from "../layouts/landing.astro";
                 $("form").submit();
             }, 20);
         }
-        api(instance, "/api/v1/instance").then((data) => {
-            $(".logo").attr("src", data.thumbnail);
-            $(".name").text(data.title);
-            document.title = data.title;
-            $(".description").text(data.description);
-        });
         const instance = location.href.split("/")[2].split("/")[0].replace("web.", "");
         $("#instance").val(instance);
         if (instance === "localhost:3000") {
             $("#instance").val("localhost:8080");
+            api("localhost:8080", "/api/v1/instance").then((data) => {
+                $(".logo").attr("src", data.thumbnail);
+                $(".name").text(data.title);
+                document.title = data.title;
+                $(".description").text(data.description);
+            });
+        } else {
+            api(instance, "/api/v1/instance").then((data) => {
+                    $(".logo").attr("src", data.thumbnail);
+                    $(".name").text(data.title);
+                    document.title = data.title;
+                    $(".description").text(data.description);
+            });
         }
     });
 </script>
