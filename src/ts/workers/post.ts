@@ -219,7 +219,7 @@ export function upload() {
 api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, localStorage.getItem("token")).then((data) => {
     $("#post-form").on("input", async () => {
         let maxlength =  500;
-        if (!data.max_toot_chars) {
+        if (data.max_toot_chars !== undefined) {
             maxlength = data.max_toot_chars;
         }
         let currlength = $("#post-form").val().length;
