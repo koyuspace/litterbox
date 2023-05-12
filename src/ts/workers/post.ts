@@ -226,7 +226,7 @@ api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, local
         await returnAllUrls($("#post-form").val()).forEach((e) => {
             currlength -= e.length;
             currlength += 23;
-        })
+        });
         $("#counter").html(`${currlength}/${maxlength}`);
         if (currlength.length > maxlength) {
             $("#post").attr("disabled", "");
