@@ -42,7 +42,6 @@ api(
   localStorage.setItem("acct", ad.acct);
 });
 
-// TODO: Implement dynamic emoji hashtags
 api(localStorage.getItem("instance"), "/api/v1/custom_emojis", true, "GET", {}, localStorage.getItem("token")).then((data) => {
   localStorage.setItem("custom_emojis", JSON.stringify(data));
 });
@@ -324,7 +323,6 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
     });
     return html;
   } catch (e) {
-    console.error(e);
     return "";
   }
 }
