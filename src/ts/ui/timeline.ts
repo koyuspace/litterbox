@@ -16,6 +16,21 @@ var escapeHTML = function (unsafe) {
   });
 };
 
+function findHashtags(searchText) {
+  let st = searchText
+  if (st.includes("<span>") && st.includes("</span>")) {
+    st = st.replace(/<span>/g, "");
+    st = st.replace(/<\/span>/g, "");
+  }
+  var regexp = /\B\#\w\w+\b/g
+  let result = st.match(regexp);
+  if (result !== null) {
+    return result;
+  } else {
+    return [];
+  }
+}
+
 api(
   localStorage.getItem("instance"),
   "/api/v1/accounts/verify_credentials",
@@ -25,6 +40,10 @@ api(
   localStorage.getItem("token")
 ).then((ad) => {
   localStorage.setItem("acct", ad.acct);
+});
+
+api(localStorage.getItem("instance"), "/api/v1/custom_emojis", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+  localStorage.setItem("custom_emojis", JSON.stringify(data));
 });
 
 const iconDelete =
@@ -107,6 +126,14 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
           }
         }
         content = content.replaceAll('<a href="', '<a target="_blank" href="');
+        let emojis = JSON.parse(localStorage.getItem("custom_emojis"));
+        findHashtags(content).forEach((hashtag) => {
+          emojis.forEach((emoji) => {
+            if (emoji.shortcode === hashtag.replace("#", "").toLowerCase()) {
+              content = content.replaceAll(`#<span>${hashtag.replace("#", "")}</span>`, `${hashtag} <img src="${emoji.url}" alt="${hashtag}" title="${hashtag}" style="margin-right:8px;" class="emoji">`);
+            }
+          });
+        });
         status += `
               <p style="margin-top:15px;"><a data-bs-toggle="collapse" href="#status-${element.id}" role="button" aria-expanded="false" aria-controls="status-${element.id}">
                   <i>${element.spoiler_text}</i> (click to open)
@@ -150,6 +177,14 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
           }
         }
         content = content.replaceAll('<a href="', '<a target="_blank" href="');
+        let emojis = JSON.parse(localStorage.getItem("custom_emojis"));
+        findHashtags(content).forEach((hashtag) => {
+          emojis.forEach((emoji) => {
+            if (emoji.shortcode === hashtag.replace("#", "").toLowerCase()) {
+              content = content.replaceAll(`#<span>${hashtag.replace("#", "")}</span>`, `${hashtag} <img src="${emoji.url}" alt="${hashtag}" title="${hashtag}" style="margin-right:8px;" class="emoji">`);
+            }
+          });
+        });
         if (content !== "") {
           status += `${content}`;
         }
@@ -223,7 +258,9 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
       const acct = localStorage.getItem("acct");
       let actions = "";
       if (element.account.acct === acct) {
-        actions += `<a href="/action/redraft?id=${element.id}" class="btn btn-primary">${iconPencil}</a> `;
+        if (!element.reblog) {
+          actions += `<a href="/action/redraft?id=${element.id}" class="btn btn-primary">${iconPencil}</a> `;
+        }
         actions += `<a href="/action/delete?id=${element.id}" class="btn btn-danger">${iconDelete}</a> `;
       }
       if (threadmode) {
