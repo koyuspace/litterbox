@@ -18,6 +18,17 @@ function manageLocalStorageOnPostForm(id, storage) {
     }
 }
 
+function returnAllUrls(text) {
+    let urls = [];
+    let words = text.replaceAll("\n", " ").split(" ");
+    words.forEach((e) => {
+        if (e.startsWith("http://") || e.startsWith("https://")) {
+            urls.push(e);
+        }
+    });
+    return urls;
+}
+
 export function loadPostForm() {
     try {
         if (localStorage.getItem("content") !== null && localStorage.getItem("content") !== "") {
@@ -204,3 +215,25 @@ export function upload() {
         });
     });
 }
+
+api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+    $("#post-form").on("input", async () => {
+        let maxlength =  500;
+        if (data.max_toot_chars !== null) {
+            maxlength = data.max_toot_chars;
+        }
+        let currlength = $("#post-form").val().length;
+        await returnAllUrls($("#post-form").val()).forEach((e) => {
+            currlength -= e.length;
+            currlength += 23;
+        })
+        $("#counter").html(`${currlength}/${maxlength}`);
+        if (currlength.length > maxlength) {
+            $("#post").attr("disabled", "");
+            $("#counter").css("color", "red");
+        } else {
+            $("#post").removeAttr("disabled");
+            $("#counter").css("color", "white");
+        }
+    });
+});
