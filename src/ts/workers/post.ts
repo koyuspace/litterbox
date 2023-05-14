@@ -89,13 +89,15 @@ export function loadPostForm() {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             if (data.reblog) {
                 $(`#${data.reblog.visibility}`).attr("selected", "");
-                if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
+                if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "" && localStorage.getItem("wasemojipicker") !== "true") {
                     $("#post-form").val(`@${data.reblog.account.acct} `);
+                    localStorage.setItem("wasemojipickjer", "false");
                 }
             } else {
                 $(`#${data.visibility}`).attr("selected", "");
-                if (data.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
+                if (data.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "" && localStorage.getItem("wasemojipicker") !== "true") {
                     $("#post-form").val(`@${data.account.acct} `);
+                    localStorage.setItem("wasemojipickjer", "false");
                 }
             }
             $("#post-form").focus();

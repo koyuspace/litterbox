@@ -14,6 +14,7 @@ const redirect_uri = protocol+domain+"/callback";
 localStorage.setItem("instance", instance);
 localStorage.setItem("scopes", scopes);
 localStorage.setItem("redirect_uri", redirect_uri);
+localStorage.setItem("wasemojipickjer", "false");
 
 api(instance, "/api/v1/apps", false, "POST", {
     "client_name": "cutebox",
