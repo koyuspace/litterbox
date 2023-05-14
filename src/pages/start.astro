@@ -46,14 +46,14 @@ import Layout from "../layouts/landing.astro";
                 $(".logo").attr("src", data.thumbnail);
                 $(".name").text(data.title);
                 document.title = data.title;
-                $(".description").text(data.description);
+                $(".description").html(data.description);
             });
         } else {
             api(instance, "/api/v1/instance").then((data) => {
                     $(".logo").attr("src", data.thumbnail);
                     $(".name").text(data.title);
                     document.title = data.title;
-                    $(".description").text(data.description);
+                    $(".description").html(data.description);
             });
         }
     });
