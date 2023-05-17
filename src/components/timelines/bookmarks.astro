@@ -1,0 +1,9 @@
+<script>
+    import $ from "jquery";
+    import { loadBookmarks } from "../../ts/timelines/bookmarks";
+    import { checkReload } from "../../ts/workers/checkreload";
+    localStorage.setItem("currentpage", "bookmarks");
+    checkReload();
+    $("#bookmarks").html(loadBookmarks());
+</script>
+<div id="bookmarks">Loading...</div>

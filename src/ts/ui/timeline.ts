@@ -60,6 +60,10 @@ const iconCopy =
   '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:file-earmark-fill"><path fill="currentColor" d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"></path></svg>';
 const iconPencil =
   '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:pencil-fill"><path fill="currentColor" d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"></path></svg>';
+const iconBookmark =
+  '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:bookmark"><path fill="currentColor" d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z"></path></svg>';
+const iconUnbookmark =
+  '<svg viewBox="0 0 16 16" class="icon" astro-icon="bi:bookmark-fill"><path fill="currentColor" d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"></path></svg>';
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -276,6 +280,11 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             actions += `<a href="/action/unboost?id=${element.id}" class="btn btn-primary">${iconBoost} ${element.reblogs_count}</a> `;
           }
           actions += `<a href="/action/reply?id=${element.id}" class="btn btn-secondary">${iconReply} ${element.replies_count}</a> `;
+          if (!element.bookmarked) {
+            actions += `<a href="/action/bookmark?id=${element.id}" class="btn btn-secondary">${iconBookmark}</a> `;
+          } else {
+            actions += `<a href="/action/unbookmark?id=${element.id}" class="btn btn-secondary">${iconUnbookmark}</a> `;
+          }
         } else {
           if (!element.reblog.favourited) {
             actions += `<a href="/action/fav?id=${element.reblog.id}" class="btn btn-warning">${iconFav}</a> `;
@@ -288,6 +297,11 @@ export function renderTimeline(data, threadmode = false, ispost = false) {
             actions += `<a href="/action/unboost?id=${element.reblog.id}" class="btn btn-primary">${iconBoost}</a> `;
           }
           actions += `<a href="/action/reply?id=${element.reblog.id}" class="btn btn-secondary">${iconReply}</a> `;
+          if (!element.bookmarked) {
+            actions += `<a href="/action/bookmark?id=${element.id}" class="btn btn-secondary">${iconBookmark}</a> `;
+          } else {
+            actions += `<a href="/action/unbookmark?id=${element.id}" class="btn btn-secondary">${iconUnbookmark}</a> `;
+          }
         }
       }
       let statusdate = new Date(Date.parse(element.created_at)).toLocaleString();

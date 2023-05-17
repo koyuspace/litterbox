@@ -1,0 +1,9 @@
+import $ from "jquery";
+import { api } from "../api/request"
+import { renderTimeline } from "../ui/timeline";
+
+export function loadBookmarks() {
+    api(localStorage.getItem("instance"), "/api/v1/bookmarks", true, "GET", {}, localStorage.getItem("token")).then((data) => {
+        $("#bookmarks").html(renderTimeline(data));
+    });
+}
