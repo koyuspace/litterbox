@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { api } from "../api/request";
+import { Md5 } from "ts-md5";
 
 const domain = location.href.split("/")[2];
 let protocol = "https://";
@@ -31,3 +32,11 @@ api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, local
     $(".navbar-brand").html(`<img src="${data.thumbnail}" id="logo" alt="Logo"> ${data.title}`);
     document.title = data.title;
 });
+
+let fediid = localStorage.getItem("acct");
+if (!fediid.includes("@")) {
+    fediid = fediid+"@"+localStorage.getItem("instance");
+}
+const callHandle = Md5.hashStr(fediid+"cutebox");
+$("#topcallbutton").attr("href", "https://meet.jit.si/"+callHandle);
+$("#topcallbutton").attr("target", "_blank");
