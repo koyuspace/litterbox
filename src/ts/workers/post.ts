@@ -87,6 +87,16 @@ export function loadPostForm() {
     }
     if (id !== undefined) {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
+            if (data.spoiler_text !== "" && $("#spoiler").val() === "") {
+                if (data.spoiler_text.includes("re: ")) {
+                    localStorage.setItem("spoiler_text", data.spoiler_text);
+                } else {
+                    localStorage.setItem("spoiler_text", "re: "+data.spoiler_text);
+                }
+                window.setTimeout(() => {
+                    manageLocalStorageOnPostForm("spoiler", "spoiler_text");
+                },0)
+            }
             if (data.reblog) {
                 $(`#${data.reblog.visibility}`).attr("selected", "");
                 if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "" && localStorage.getItem("wasemojipicker") !== "true") {
