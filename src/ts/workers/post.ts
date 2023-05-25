@@ -225,6 +225,9 @@ export function upload() {
             localStorage.setItem("uploads", JSON.stringify(uploads));
             $(`#file-${data.id}`).hide();
         });
+    }).catch(() => {
+        $("#file").removeAttr("disabled");
+        $("#upload").removeAttr("disabled");
     });
 }
 

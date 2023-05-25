@@ -22,14 +22,25 @@ $(document).ready(() => {
             $(".logo").attr("src", data.thumbnail);
             $(".name").text(data.title);
             document.title = data.title;
-            $(".description").html(data.description);
+            let description = data.description;
+            description.split("\n").forEach((line) => {
+                if (line.includes("%donate%")) {
+                    description = description.replace(line, "");
+                }
+            });
+            $(".description").html(description);
         });
     } else {
         api(instance, "/api/v1/instance").then((data) => {
                 $(".logo").attr("src", data.thumbnail);
                 $(".name").text(data.title);
-                document.title = data.title;
-                $(".description").html(data.description);
+                let description = data.description;
+                description.split("\n").forEach((line) => {
+                    if (line.includes("%donate%")) {
+                        description = description.replace(line, "");
+                    }
+                });
+                $(".description").html(description);
         });
     }
 });
