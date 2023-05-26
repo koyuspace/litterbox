@@ -33,9 +33,9 @@ export function loadUser(id) {
         api(localStorage.getItem("instance"), `/api/v1/accounts/relationships?id=${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
             cd[1] = data[0];
         }).then(() => {
-            var canNotify = false;
             api(localStorage.getItem("instance"), `/api/v1/instance`, true, "GET", {}, localStorage.getItem("token")).then((cdi2) => {
-                canNotify = semver.satisfies(cdi2.version, ">=3.3.0")
+                // If version checks are neccessary, we might need to send this request to the server
+                // For now this is just a placeholder
             }).then(() => {
                 let display_name = cd[0].display_name;
                 try {
@@ -57,12 +57,10 @@ export function loadUser(id) {
                     } else {
                         html += `<a href="/action/unfollow?id=${cd[0].id}" id="followbutton" title="Follow pending">${iconFollowPending}</a> `
                     }
-                    if (canNotify) {
-                        if (cd[1].notifying) {
-                            html += `<a href="/action/unnotify?id=${cd[0].id}" id="notifybutton">${iconUnnotify}</a>` ;
-                        } else {
-                            html += `<a href="/action/notify?id=${cd[0].id}" id="notifybutton">${iconNotify}</a> `;
-                        }
+                    if (cd[1].notifying) {
+                        html += `<a href="/action/unnotify?id=${cd[0].id}" id="notifybutton">${iconUnnotify}</a>` ;
+                    } else {
+                        html += `<a href="/action/notify?id=${cd[0].id}" id="notifybutton">${iconNotify}</a> `;
                     }
                     html += '<a href="/action/report?id='+cd[0].id+'" id="reportbutton" title="Report">'+iconBan+'</a>';
                     if (cd[1].blocking) {
