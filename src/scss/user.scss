@@ -59,3 +59,55 @@
 .user-card > .avatar {
   vertical-align: top;
 }
+
+#user_card td {
+  color: #fff;
+  background: $gray-800;
+  border-bottom: 1px solid $gray-700;
+  padding: 12px;
+}
+
+#user_card table {
+  border-radius: 10px;
+  margin: 0 !important;
+}
+
+#user_card td:first-child {
+  background: $gray-900;
+  width: 100px;
+}
+
+#user_card td:last-child {
+  background: $gray-800;
+  width: 400px;
+}
+
+#user_card .encapsulate {
+  display: inline-block;
+  width: 510px !important;
+  margin: 0 auto !important;
+  background: $gray-800;
+  border-radius: 10px;
+}
+
+#user_card .encapsulate table {
+  margin: 0 !important;
+}
+
+#user_card > .encapsulate > table > tbody > tr:nth-child(1) > td {
+  border-top-left-radius: 10px;
+}
+
+#user_card > .encapsulate > table > tbody > tr:last-child > td {
+  border-bottom-left-radius: 10px;
+  border-bottom: 0 !important;
+}
+
+#user_card > .encapsulate > table > tbody > tr:nth-child(1) > td:last-child {
+  border-top-right-radius: 10px;
+}
+
+#user_card > .encapsulate > table > tbody > tr:last-child > td:last-child {
+  border-bottom-right-radius: 10px;
+  border-bottom: 0 !important;
+}
