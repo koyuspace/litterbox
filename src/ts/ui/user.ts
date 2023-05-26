@@ -129,7 +129,7 @@ export function loadUser(id) {
                         html += '<br><br><div class="encapsulate"><table class="table"><tbody>'
                         cd[0].fields.forEach(field => {
                             if (field.verified_at) {
-                                html += `<tr><td><b>${field.name}</b></td><td>${field.value} <span class="badge bg-secondary">Verified</span></td></tr>`;
+                                html += `<tr><td><b>${field.name}</b></td><td>${field.value} <span class="badge bg-success">Verified</span></td></tr>`;
                             } else {
                                 html += `<tr><td><b>${field.name}</b></td><td>${field.value}</td></tr>`;
                             }
@@ -138,7 +138,11 @@ export function loadUser(id) {
                     }
                     if (cd[0].last_status_at !== "") {
                         let onlinedate = new Date(Date.parse(cd[0].last_status_at)).toLocaleString();
-                        html += `<p>Last online: ${onlinedate}</p>`;
+                        if (onlinedate !== "Invalid Date") {
+                            html += `<p>Last online: ${onlinedate}</p>`;
+                        } else {
+                            html += `<p>Last online: Unknown</p>`;
+                        }
                     }
                 }
                 html += "</div>";
