@@ -1,6 +1,7 @@
 import $ from "jquery";
 import { api } from "../api/request";
 import { Md5 } from "ts-md5";
+import { semver } from "semver";
 
 const domain = location.href.split("/")[2];
 let protocol = "https://";
@@ -31,6 +32,9 @@ window.setInterval(loadNotificationLength, 5000);
 api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, localStorage.getItem("token")).then((data) => {
     $(".navbar-brand").html(`<img src="${data.thumbnail}" id="logo" alt="Logo"> ${data.title}`);
     document.title = data.title;
+    if (semver.lt(data.version, "0.9.0")) {
+        $("#version-warning").removeAttr("style");
+    }
 });
 
 let fediid = localStorage.getItem("acct");
