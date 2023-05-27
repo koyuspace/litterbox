@@ -126,7 +126,7 @@ export function loadUser(id) {
                         html += `<p>Posts: ${cd[0].statuses_count} | <a href="#" id="loadfollowers">Followers: ${cd[0].followers_count}</a> | <a href="#" id="loadfollowings">Following: ${cd[0].following_count}</a><br><br><i style="display:inline-block; width:60%">${inaccurate}</i></p>`;
                     }
                     if (cd[0].fields) {
-                        html += '<br><br><div class="encapsulate"><table class="table"><tbody>'
+                        html += '<br><br><div class="encapsulate"><div style="overflow-x:auto;"><table class="table"><tbody>'
                         cd[0].fields.forEach(field => {
                             if (field.verified_at) {
                                 html += `<tr><td><b>${field.name}</b></td><td>${field.value} <span class="badge bg-success">Verified</span></td></tr>`;
@@ -134,7 +134,7 @@ export function loadUser(id) {
                                 html += `<tr><td><b>${field.name}</b></td><td>${field.value}</td></tr>`;
                             }
                         });
-                        html += '</tbody></table></div><br><br>';
+                        html += '</tbody></table></div></div><br><br>';
                     }
                     if (cd[0].last_status_at !== "") {
                         let onlinedate = new Date(Date.parse(cd[0].last_status_at)).toLocaleString();
