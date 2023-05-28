@@ -187,11 +187,12 @@ export function post() {
     });
 }
 
-export function upload() {
+export function upload(alt = "") {
     var input: any = document.getElementById("file");
     var file_data = input.files[0];
     let form_data = new FormData();
     form_data.append("file", file_data);
+    form_data.append("description", alt);
     $("#file").attr("disabled", "");
     $("#upload").attr("disabled", "");
     api(localStorage.getItem("instance"), "/api/v1/media", true, "POST", form_data, localStorage.getItem("token"), true).then((data) => {

@@ -6,5 +6,10 @@ $("#post").click(() => {
     post();
 });
 $("#upload").click(() => {
-    upload();
+    let alt = prompt("Add a description for your file:");
+    if (alt && alt != "") {
+        upload(alt);
+    } else {
+        upload();
+    }
 });
