@@ -30,7 +30,7 @@ loadNotificationLength();
 window.setInterval(loadNotificationLength, 5000);
 
 api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, localStorage.getItem("token")).then((data) => {
-    $(".navbar-brand").html(`<img src="${data.thumbnail}" id="logo" alt="Logo"> ${data.title} 🏳️‍🌈`);
+    $(".navbar-brand").html(`<img src="${data.thumbnail}" id="logo" alt="Logo"> ${data.title}`);
     document.title = data.title;
     if (semver.lt(data.version.split(" ")[0], "0.9.0")) {
         $("#version-warning").removeAttr("style");
