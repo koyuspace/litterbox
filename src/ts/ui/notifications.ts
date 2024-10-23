@@ -8,10 +8,7 @@ const iconDelete = '<svg viewBox="0 0 16 16" astro-icon="bi:trash"><g fill="curr
 const iconMessage = '<svg viewBox="0 0 16 16" astro-icon="bi:envelope"><path fill="currentColor" d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.708 2.825L15 11.105V5.383zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741zM1 11.105l4.708-2.897L1 5.383v5.722z"></path></svg>';
 
 export function renderNotifications(data) {
-    let notifications = `<button onclick="location.href='/action/deletenotifications'" class="btn btn-danger" style="float:right;margin-right:8px;">${iconDelete}</button><br><br><br><ul>`;
-    if (data.length === 0) {
-        notifications += "<li>No notifications</li>";
-    }
+    let notifications = `<div id="clearbutton"><button onclick="location.href='/action/deletenotifications'" class="btn btn-danger" style="float:right;margin-right:8px;">${iconDelete}</button><br><br><br></div><ul>`;
     data.forEach(element => {
         let display_name = element.account.display_name;
         if (element.account.emojis.length > 0) {
@@ -68,5 +65,11 @@ export function renderNotifications(data) {
         }
     });
     notifications += "</ul>";
+    if (data.length === 0) {
+        notifications += '<div class="alert alert-warning">No notifications found.</div>';
+        window.setTimeout(() => {
+            $("#clearbutton").hide();
+        }, 0);
+    }
     $("#notifications").html(notifications);
 }

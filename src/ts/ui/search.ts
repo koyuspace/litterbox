@@ -54,5 +54,7 @@ export function loadSearch(query) {
       });
     }
     $("#search").html(html);
+  }).catch(() => {
+    $("#search").html('<div class="alert alert-danger" role="alert">An error occured while searching.</div>');
   });
 }

@@ -18,5 +18,9 @@
     {
         "page": "timeline/favourites",
         "name": "Favourites"
+    },
+    {
+        "page": "timeline/bookmarks",
+        "name": "Bookmarks"
     }
 ]

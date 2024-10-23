@@ -1,41 +1,21 @@
 ---
 import Layout from "../layouts/landing.astro";
+import "../scss/start.scss";
 ---
 
 <Layout>
     <div class="jumbotron">
         <img src="/cat.png" height="220" class="logo">
-        <h1 class="display-4 lead">Welcome to litterbox!</h1>
-        <p class="lead">The simple client for the Fediverse. Enter your instance and click the login button to use it.</p>
+        <h1 class="display-4 lead">Welcome to <span class="name">litterbox</span>!</h1>
+        <p class="lead description">The simple client for the Fediverse. Enter your instance and click the login button to use it.</p>
         <hr class="my-4">
         <p class="lead">
-            <form action="/login" method="GET" class="input-group">
-                <span class="input-group-text" id="addon-wrapping">https://</span>
-                <input type="text" class="form-control" name="instance" placeholder="yourinstance.tld">
-                <input type="submit" class="btn btn-lg btn-primary" role="button" value="Log in">
+            <form action="/login" method="GET">
+                <input type="hidden" value="" class="form-control" id="instance" name="instance" placeholder="yourinstance.tld">
+                <input type="submit" class="btn btn-lg btn-primary" id="login" role="button" value="Log in">
             </form>
         </p>
     </div>
 </Layout>
 
-<script>
-    import { checkForLogin } from "../ts/auth/check";
-    import { checkInstance } from "../ts/workers/landing";
-    import $ from "jquery";
-    checkForLogin();
-    $(document).ready(() => {
-        if (checkInstance() !== "" && localStorage.getItem("token") === null) {
-            $("input[name=\"instance\"]").val(checkInstance());
-            window.setTimeout(() => {
-                $("form").submit();
-            }, 20);
-        }
-    });
-</script>
-
-<style>
-    #login {
-        display: block;
-        margin: 0 auto;
-    }
-</style>
+<script src="../ts/ui/start.ts"></script>

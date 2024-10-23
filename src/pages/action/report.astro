@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/default.astro";
+---
+
+<Layout>
+    <div class="center">
+        <h1>Report a user</h1>
+    </div>
+    <br>
+    <div id="profile-card"></div>
+    <br>
+    <div id="wrapper">
+        <div id="error"></div>
+        <p><textarea id="comment" class="form-control"></textarea></p><br>
+        <p><label for="forward">Forward this to the original instance owners?</label> <input type="checkbox" id="forward"></p>
+        <br><br><p><a id="confirm" class="btn btn-primary">Confirm</a></p>
+    </div>
+</Layout>
+
+<script>
+    import $ from "jquery";
+    import { api } from "../../ts/api/request";
+    import { renderProfileCards } from "../../ts/ui/profile_cards";
+    const id = new URLSearchParams(window.location.search).get("id");
+    //$("#confirm").attr("href", `/action/confirm_report?id=${id}`);
+    $("#confirm").click(() => {
+        $("#error").html("");
+        api(localStorage.getItem("instance"), `/api/v1/reports`, true, 'POST', {
+            account_id: id,
+            comment: $("#comment").val(),
+            forward: $("#forward").is(":checked")
+        }, localStorage.getItem("token")).then((data) => {
+            location.replace("/action/confirm_report");
+        }).catch((err) => {
+        console.log(err);
+            $("#error").html('<div class="alert alert-danger" role="alert">An error occured while reporting this user.</div>');
+        });
+    });
+    api(localStorage.getItem("instance"), `/api/v1/accounts/${id}`, true, 'GET', {}, localStorage.getItem("token")).then((data) => {
+        $("#profile-card").html(renderProfileCards([data]));
+        if (!data.acct.includes("@")) {
+            $("#forward").prop("disabled", true);
+            $("#forward").attr("title", "This user is not on a remote instance, so this option is not available.");
+        } else {
+            $("#forward").attr("checked", true);
+        }
+    });
+</script>
+
+<style>
+    @media(min-width:800px) {
+        #profile-card {
+            width: 37.5%;
+            margin: 0 auto;
+        }
+    }
+    #wrapper {
+        text-align: center;
+    }
+    .form-control {
+        width: 400px !important;
+        margin: 0 auto;
+    }
+    textarea {
+        height: 150px;
+    }
+</style>

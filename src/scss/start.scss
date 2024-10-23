@@ -1,0 +1,23 @@
+#login {
+    display: block;
+    margin: 0 auto;
+}
+
+.description {
+    text-align: left !important;
+    display: block;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: 20px !important;
+    background: darken(rgb(33, 37, 41), 5%);
+}
+
+@media(min-width:800px) {
+    .description {
+        width: 50%;
+        position: relative;
+        margin: 0 auto;
+        left: 8px;
+        border-radius: 10px;
+    }
+}

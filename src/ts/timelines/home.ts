@@ -12,6 +12,10 @@ export function loadHome() {
         }, 500);
     }
     api(localStorage.getItem("instance"), hreq, true, "GET", {}, localStorage.getItem("token")).then((data) => {
-        $("#home").html(renderTimeline(data));
+        if (data.length === 0) {
+            $("#home").html("<div class='alert alert-warning'>No posts found. To discover new people <a href='https://communitywiki.org/trunk' target='_blank'>take a look here</a> or <a href='/action/post'>write your first post</a>.</div>");
+        } else {
+            $("#home").html(renderTimeline(data));
+        }
     });
 }

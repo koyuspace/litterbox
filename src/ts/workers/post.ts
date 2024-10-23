@@ -87,15 +87,27 @@ export function loadPostForm() {
     }
     if (id !== undefined) {
         api(localStorage.getItem("instance"), `/api/v1/statuses/${id}`, true, "GET", {}, localStorage.getItem("token")).then((data) => {
+            if (data.spoiler_text !== "" && $("#spoiler").val() === "") {
+                if (data.spoiler_text.includes("re: ")) {
+                    localStorage.setItem("spoiler_text", data.spoiler_text);
+                } else {
+                    localStorage.setItem("spoiler_text", "re: "+data.spoiler_text);
+                }
+                window.setTimeout(() => {
+                    manageLocalStorageOnPostForm("spoiler", "spoiler_text");
+                },0)
+            }
             if (data.reblog) {
                 $(`#${data.reblog.visibility}`).attr("selected", "");
-                if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
+                if (data.reblog.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "" && localStorage.getItem("wasemojipicker") !== "true") {
                     $("#post-form").val(`@${data.reblog.account.acct} `);
+                    localStorage.setItem("wasemojipickjer", "false");
                 }
             } else {
                 $(`#${data.visibility}`).attr("selected", "");
-                if (data.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "") {
+                if (data.account.id !== localStorage.getItem("userid") && localStorage.getItem("content") === "" && localStorage.getItem("wasemojipicker") !== "true") {
                     $("#post-form").val(`@${data.account.acct} `);
+                    localStorage.setItem("wasemojipickjer", "false");
                 }
             }
             $("#post-form").focus();
@@ -175,11 +187,12 @@ export function post() {
     });
 }
 
-export function upload() {
+export function upload(alt = "") {
     var input: any = document.getElementById("file");
     var file_data = input.files[0];
     let form_data = new FormData();
     form_data.append("file", file_data);
+    form_data.append("description", alt);
     $("#file").attr("disabled", "");
     $("#upload").attr("disabled", "");
     api(localStorage.getItem("instance"), "/api/v1/media", true, "POST", form_data, localStorage.getItem("token"), true).then((data) => {
@@ -213,20 +226,23 @@ export function upload() {
             localStorage.setItem("uploads", JSON.stringify(uploads));
             $(`#file-${data.id}`).hide();
         });
+    }).catch(() => {
+        $("#file").removeAttr("disabled");
+        $("#upload").removeAttr("disabled");
     });
 }
 
 api(localStorage.getItem("instance"), "/api/v1/instance", true, "GET", {}, localStorage.getItem("token")).then((data) => {
     $("#post-form").on("input", async () => {
         let maxlength =  500;
-        if (data.max_toot_chars !== undefined) {
+        if (data.max_toot_chars !== null) {
             maxlength = data.max_toot_chars;
         }
         let currlength = $("#post-form").val().length;
         await returnAllUrls($("#post-form").val()).forEach((e) => {
             currlength -= e.length;
             currlength += 23;
-        });
+        })
         $("#counter").html(`${currlength}/${maxlength}`);
         if (currlength.length > maxlength) {
             $("#post").attr("disabled", "");

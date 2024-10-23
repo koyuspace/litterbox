@@ -15,8 +15,9 @@
 #blockbutton,
 #notifybutton,
 #makeunfollowbutton,
-#nfollowbutton,
-#mentionbutton {
+#mentionbutton,
+#callbutton,
+#reportbutton {
   color: #fff;
   float: right;
 }
@@ -27,7 +28,8 @@
 #notifybutton .icon,
 #makeunfollowbutton .icon,
 #nfollowbutton .icon,
-#mentionbutton .icon {
+#callbutton .icon,
+#reportbutton .icon {
   height: 32px;
   margin-left: 16px;
 }
@@ -54,4 +56,28 @@
 #user_card > .avatar,
 .user-card > .avatar {
   vertical-align: top;
+}
+
+#user_card td {
+  color: #fff;
+  background: $gray-800;
+  border-bottom: 1px solid $gray-700;
+}
+
+#user_card table {
+  border-radius: 10px;
+}
+
+#user_card td:first-child {
+  background: $gray-900;
+  vertical-align: middle;
+}
+
+#user_card td:last-child {
+  background: $gray-800;
+  vertical-align: middle;
+}
+
+#user_card td:last-child > .badge {
+  vertical-align: middle;
 }

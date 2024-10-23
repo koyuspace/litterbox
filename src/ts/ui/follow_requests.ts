@@ -32,7 +32,7 @@ export function renderFollowRequests() {
             });
         })
         if (data.length === 0) {
-            html += "<i>No pending follow requests</i>";
+            html += "<div class='alert alert-warning'>No pending follow requests.</div>";
         }
         $("#follow_requests").html(html);
     });

@@ -2,7 +2,7 @@ import { api } from "../api/request";
 
 const domain = location.href.split("/")[2];
 let protocol = "https://";
-const instance = location.href.split("?instance=")[1];
+const instance = location.href.split("?instance=")[1].replace("%3A", ":");
 const scopes = "read write follow";
 
 if (domain.startsWith("localhost")) {
@@ -23,6 +23,10 @@ api(instance, "/api/v1/apps", false, "POST", {
 }).then((data) => {
     localStorage.setItem("app", JSON.stringify(data));
     window.setTimeout(() => {
-        location.href = `https://${instance}/oauth/authorize?client_id=${data.client_id}&scope=${scopes.replaceAll(" ", "+")}&redirect_uri=${encodeURI(redirect_uri)}&response_type=code`;
+        if (instance.startsWith("localhost")) {
+            location.href = `http://${instance}/oauth/authorize?client_id=${data.client_id}&scope=${scopes.replaceAll(" ", "+")}&redirect_uri=${encodeURI(redirect_uri)}&response_type=code`;
+        } else {
+            location.href = `https://${instance}/oauth/authorize?client_id=${data.client_id}&scope=${scopes.replaceAll(" ", "+")}&redirect_uri=${encodeURI(redirect_uri)}&response_type=code`;
+        }
     }, 100);
 });

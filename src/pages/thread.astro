@@ -17,6 +17,7 @@ import Layout from "../layouts/default.astro";
         const id = location.href.split("?id=")[1];
         checkReload();
         loadThread(id);
+        localStorage.setItem("wasemojipicker", "false")
         $("#back").click((e) => {
             goBack();
             e.preventDefault();
