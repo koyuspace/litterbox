@@ -17,7 +17,8 @@
 #makeunfollowbutton,
 #mentionbutton,
 #callbutton,
-#reportbutton {
+#reportbutton,
+#mentionbutton {
   color: #fff;
   float: right;
 }
@@ -29,7 +30,8 @@
 #makeunfollowbutton .icon,
 #nfollowbutton .icon,
 #callbutton .icon,
-#reportbutton .icon {
+#reportbutton .icon,
+#mentionbutton .icon {
   height: 32px;
   margin-left: 16px;
 }
