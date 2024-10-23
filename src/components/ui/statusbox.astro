@@ -1,5 +1,7 @@
 ---
 import Icon from "astro-icon";
+import Gifpicker from "./gifpicker.astro";
+import Emojipicker from "./emojipicker.astro";
 ---
 
 <input type="text" class="form-control" id="spoiler" placeholder="Content warning"><br>
@@ -25,12 +27,14 @@ import Icon from "astro-icon";
     <input type="submit" id="post" value="Post" class="btn btn-primary">
 </div>
 
-<a href="/emoji"><Icon id="emoji-picker" name="ph:smiley" /></a>
+<Gifpicker />
+<Emojipicker />
 
 <script src="../../ts/ui/statusbox.ts"></script>
 
 <style is:inline>
-    #emoji-picker {
+    #emoji-picker,
+    #gif {
         width: 2em;
         height: 2em;
         display: block;

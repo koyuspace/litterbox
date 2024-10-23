@@ -1,0 +1,124 @@
+---
+import Icon from "astro-icon";
+import Tenor from "react-tenor";
+import $ from "jquery";
+import { api } from "../../ts/api/request";
+
+let uploads = [];
+
+function dataURLtoFile(dataurl, filename) {
+  let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+  while(n--){
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], filename, { type: mime });
+}
+
+function onDoneButton(result) {
+    const url = result.media[0].mp4.url;
+    const alt = result.content_description;
+    var modal = this;
+    // eslint-disable-next-line promise/catch-or-return
+    fetch(url).then(function(response) {
+      return response.blob();
+    }).then(function(blob) {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = function() {
+        var dataUrl = reader.result;
+        const file = dataURLtoFile(dataUrl, 'tenor.mp4');
+        let form_data = new FormData();
+        form_data.append('file', file);
+        form_data.append('description', alt);
+        api(localStorage.getItem("instance"), "/api/v1/media", true, "POST", form_data, localStorage.getItem("token"), true).then((data) => {
+            const attachment = data;
+            uploads.push(data.id);
+            localStorage.setItem("uploads", JSON.stringify(uploads));
+            $("#file").val("");
+            if (attachment.type === "image") {
+                $("#media_attachments").append(`<img src="${attachment.url}" id="file-${data.id}" class="attachment" width="300"> `);
+            }
+            if (attachment.type === "video") {
+                $("#media_attachments").append(`<img src="${attachment.preview_url}" id="file-${data.id}" class="attachment" width="300"> `);
+            }
+            if (attachment.type === "audio") {
+                $("#media_attachments").append(`<audio src=${attachment.url} id="file-${data.id}" class="attachment" preload controls></audio> `);
+            }
+            if (attachment.type === "gifv") {
+                $("#media_attachments").append(`<video src=${attachment.url} id="file-${data.id}" width="300" class="attachment" autoplay muted loop></video> `);
+            }
+            $("#file").removeAttr("disabled");
+            $("#upload").removeAttr("disabled");
+            $(`#file-${data.id}`).click(() => {
+                const id = $(`#file-${data.id}`).attr("id").replace("file-", "");
+                let tmp = [];
+                uploads.forEach((e) => {
+                    if (e !== id) {
+                        tmp.push(e);
+                    }
+                });
+                uploads = tmp;
+                localStorage.setItem("uploads", JSON.stringify(uploads));
+                $(`#file-${data.id}`).hide();
+            });
+            });
+        };
+    });
+}
+---
+
+<a data-bs-toggle="modal" data-bs-target="#gifModal" href="#gifModal" role="button" aria-expanded="false">
+    <Icon id="gif" name="ph:gif" />
+</a>
+
+<div class="modal fade" id="gifModal" tabindex="-1" role="dialog" aria-labelledby="gifModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content bg-dark">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gifModalLabel">GIF picker</h5>
+          <button type="button" class="close bg-dark" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <!--  <Tenor
+            token='FJBKNQSVF2DD'
+            onSelect={result => onDoneButton(result)}
+            autoFocus={true}
+            contentFilter='off'
+          /> -->
+          <h1>Coming soon!</h1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    import $ from 'jquery';
+    $(document).ready(function() {
+        $(".react-tenor--search").attr("class", "react-tenor--search form-control");
+        $(".react-tenor--search-button").attr("class", "btn btn-primary");
+    });
+</script>
+
+<style>
+    .close {
+        outline: 0;
+        border: 0;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: block;
+        font-size: 11px;
+        color: #fff;
+    }
+    .modal-header,
+    .modal-footer {
+        border: 0 !important;
+    }
+</style>

@@ -13,7 +13,7 @@ api(localStorage.getItem("instance"), "/api/v1/custom_emojis", true, "GET", {}, 
     }
     data.forEach((emoji) => {
         if (emoji.visible_in_picker) {
-            $("#emoji").append("<img src='" + emoji.url + "' title=':"+emoji.shortcode+": (Click to copy)' alt=':" + emoji.shortcode + ":' title='" + emoji.shortcode + "' class='emoji' />");
+            $("#emoji").append("<img src='" + emoji.url + "' title=':"+emoji.shortcode+": (Click to copy)' alt=':" + emoji.shortcode + ":' title='" + emoji.shortcode + "' class='emoji' data-bs-dismiss='modal' />");
             images = $("#emoji img");
         }
     });
@@ -32,7 +32,7 @@ $("#search").on("keyup",() => {
     }
 });
 
-window.setInterval(() => {
+window.setTimeout(() => {
     $(".emoji").hover(function(){
         $(this).css("transform", "scale(2, 2)");
      }, function(){
@@ -41,5 +41,10 @@ window.setInterval(() => {
      $(".emoji").click(function(){
         var emoji = $(this).attr("alt");
         navigator.clipboard.writeText(emoji);
+        let leer = " ";
+        if ($("#post-form").val().length === 0) {
+            leer = "";
+        }
+        $("#post-form").val($("#post-form").val() + leer + emoji);
      });
 }, 1000);
