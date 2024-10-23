@@ -28,10 +28,12 @@ loadNotificationLength();
 
 window.setInterval(loadNotificationLength, 5000);
 
-let fediid = localStorage.getItem("acct");
-if (!fediid.includes("@")) {
-    fediid = fediid+"@"+localStorage.getItem("instance");
-}
-const callHandle = Md5.hashStr(fediid+"litterbox");
-$("#topcallbutton").attr("href", "https://meet.jit.si/"+callHandle);
-$("#topcallbutton").attr("target", "_blank");
+window.setTimeout(() => {
+    let fediid = localStorage.getItem("acct");
+    if (!fediid.includes("@")) {
+        fediid = fediid+"@"+localStorage.getItem("instance");
+    }
+    const callHandle = Md5.hashStr(fediid+"litterbox");
+    $("#topcallbutton").attr("href", "https://meet.jit.si/"+callHandle);
+    $("#topcallbutton").attr("target", "_blank");
+}, 1000);
