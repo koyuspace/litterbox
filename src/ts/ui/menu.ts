@@ -28,7 +28,7 @@ loadNotificationLength();
 
 window.setInterval(loadNotificationLength, 5000);
 
-window.setTimeout(() => {
+if (localStorage.getItem("acct") !== null) {
     let fediid = localStorage.getItem("acct");
     if (!fediid.includes("@")) {
         fediid = fediid+"@"+localStorage.getItem("instance");
@@ -36,4 +36,8 @@ window.setTimeout(() => {
     const callHandle = Md5.hashStr(fediid+"litterbox");
     $("#topcallbutton").attr("href", "https://meet.jit.si/"+callHandle);
     $("#topcallbutton").attr("target", "_blank");
-}, 1000);
+} else {
+    window.setTimeout(() => {
+        location.reload();
+    }, 500);
+}
